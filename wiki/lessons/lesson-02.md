@@ -1,6 +1,6 @@
-# 第二节课作业：Wiki 初始化与 VeighNa 源码学习
+# 第二节课作业：Wiki 学习与 CTP 行情 DEMO
 
-更新日期：2026-10-08。状态：初始化及三模块源码接入、主链路静态阅读完成；未安装平台或运行策略，提交与同步情况以 Git 记录为准。
+更新日期：2026-10-08。状态：Wiki、源码阅读与底层 CTP DEMO 开发完成；专用 SDK 环境和离线验证通过，外部连接超时；未运行策略，提交与同步情况以 Git 记录为准。
 
 ## 作业要求
 
@@ -46,5 +46,15 @@
 ### 后续验收标准
 
 完整导出文件树与上游 Git 条目一致；版本号可追溯到源码；新增知识页面进入索引且相对链接有效；阅读结论注明源码与教学假设；本次不安装依赖、编译 SDK、连接柜台或运行回测。
+
+## 后续要求：开发底层 vnpy_ctp 最小 DEMO
+
+用户要求从底层 Python API 实现连接登录、订阅合约和打印行情，并授权使用其 SimNow 仿真账号。用户将合约选择交给 LLM；本 DEMO 选择 `rb2701` 为默认教学合约，保留参数覆盖，未验证其当前柜台状态。账号信息不写入课次记录或 Git。
+
+交付：[demo.py](../../demos/lesson-02/ctp_minimal/demo.py)、[空账号配置模板](../../demos/lesson-02/ctp_minimal/config.example.json)、[依赖文件](../../demos/lesson-02/ctp_minimal/requirements.txt)、[9 个离线测试](../../demos/lesson-02/ctp_minimal/tests/test_demo.py)、[运行说明](../../demos/lesson-02/ctp_minimal/README.md) 与 [Wiki 讲解](../concepts/ctp-minimal-demo.md)。
+
+验收：9 个离线测试通过；Mac arm64 / Python 3.12.2 中从官方完整源码编译安装 `vnpy_ctp 6.7.7.2`、核心 `vnpy 4.5.0`，依赖检查通过，真实 SDK 加载、交易 API 启动/关闭成功。用户给定两前置端口均拒绝 TCP 连接；真实 DEMO 在交易连接/登录阶段等待 10 秒后超时退出，尚无登录成功、订阅确认和真实行情。
+
+本地账号配置、虚拟环境和 SDK 运行文件均被 Git 忽略；`raw/` 原始快照保持不变。没有增加下单、策略、回测或自动切换前置的功能。网络恢复后的端到端验证见 [待解问题](../questions.md)。
 
 相关：[总索引](../index.md)

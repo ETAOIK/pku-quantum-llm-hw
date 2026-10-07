@@ -1,1 +1,5 @@
 .DS_Store
+.venv/
+__pycache__/
+demos/lesson-02/ctp_minimal/config.local.json
+demos/lesson-02/ctp_minimal/runtime/

@@ -1,6 +1,6 @@
 # Wiki 总索引
 
-更新日期：2026-10-08。当前阶段：第二节课项目初始化与 VeighNa 三模块交易主链路静态阅读；未完成运行验证。
+更新日期：2026-10-08。当前阶段：第二节课 Wiki、源码阅读与底层 CTP DEMO；离线与 SDK 验证完成，外部连接超时。
 
 ## 学习与维护
 
@@ -10,7 +10,7 @@
 
 ## 课程作业
 
-- [第二节课：Wiki 与源码学习](lessons/lesson-02.md)：初始化和 VeighNa 源码接入、阅读与验收记录。
+- [第二节课：Wiki 与 CTP DEMO](lessons/lesson-02.md)：初始化、源码阅读、DEMO 开发与验收记录。
 
 ## 来源
 
@@ -25,9 +25,11 @@
 - [VeighNa 三模块架构](concepts/veighna-architecture.md)：模块分工、平台装配与指令/回报路径。
 - [VeighNa 订单生命周期](concepts/veighna-order-lifecycle.md)：从买入请求、部分成交到撤单和策略持仓。
 - [CTA 策略与回测](concepts/cta-strategy-and-backtesting.md)：双均线、预热、状态条件、模拟撮合与成本。
+- [底层 CTP 最小 DEMO](concepts/ctp-minimal-demo.md)：认证登录、行情订阅、打印回调、版本差异与验证边界。
 
 ## 项目入口
 
 - [仓库说明](../README.md)：使用方法与目录结构。
 - [原始资料入口](../raw/README.md)：资料放置与来源保留方式。
 - [LLM 维护规范](../AGENTS.md)：页面约定、课次隔离与维护流程。
+- [DEMO 运行说明](../demos/lesson-02/ctp_minimal/README.md)：安装、配置、启动命令和测试结果。

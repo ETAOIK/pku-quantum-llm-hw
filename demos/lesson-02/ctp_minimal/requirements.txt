@@ -1,0 +1,3 @@
+vnpy==4.5.0
+vnpy_ctp @ git+https://gitee.com/vnpy/vnpy_ctp.git@fa199f70dac9e242c20e925c17e2241b877e694f ; sys_platform == "darwin"
+vnpy_ctp==6.7.11.4; sys_platform != "darwin"
