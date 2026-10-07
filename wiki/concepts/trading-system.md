@@ -1,8 +1,8 @@
 # 量化交易系统的学习入口
 
-更新日期：2026-10-08。状态：LLM 整理的学习框架，待课程资料支持与修订。
+更新日期：2026-10-08。状态：学习框架，已连接 VeighNa 源码笔记；理解与实现仍待检查。
 
-来源边界：当前 [唯一接入文档](../sources/llm-wiki.md) 只介绍 Wiki 方法，不能作为本页量化内容的证据。本页用于组织接下来要学的问题，尚不是已完成的课程知识总结。
+来源边界：[LLM Wiki](../sources/llm-wiki.md) 只介绍知识库方法。新接入的 [vnpy](../sources/vnpy.md)、[CTP](../sources/vnpy-ctp.md) 与 [CTA](../sources/vnpy-ctastrategy.md) 提供具体实现依据；本页仍用于组织学习问题，尚不是已完成的课程知识总结。
 
 ## 先用一个例子确定学习对象
 
@@ -20,5 +20,7 @@
 | 评估与监控 | 怎样发现模拟假设、账户状态或运行过程中的问题？ |
 
 每次新增资料，只补充相关环节的解释，并链接来源。先按 [学习路线](../roadmap.md) 补足基础词汇；无法回答的问题记录在 [待解问题](../questions.md)。
+
+已有的源码消化入口：[三模块架构](veighna-architecture.md)、[订单生命周期](veighna-order-lifecycle.md)、[策略与回测](cta-strategy-and-backtesting.md)。
 
 相关：[总索引](../index.md)

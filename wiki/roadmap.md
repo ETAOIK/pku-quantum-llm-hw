@@ -1,6 +1,6 @@
 # 学习路线
 
-更新日期：2026-10-08。状态：暂定计划，全部待学习。
+更新日期：2026-10-08。状态：暂定计划；已补充源码笔记，各阶段的理解/实现验收仍待完成。
 
 这是 LLM 为项目初始化整理的学习框架，不是教师发布的课程安排。后续以用户提供的课程资料与课次要求修订。每阶段先理解词汇和小例子，再进入实现。
 
@@ -15,4 +15,6 @@
 
 每阶段产出相关来源摘要、概念解释、一个教学例子和未解问题；代码与实验只有在对应作业要求明确后添加。
 
-下一步先接入课程资料，再确认学习使用的市场、品种和开发语言。参见 [待解问题](questions.md)、[系统学习入口](concepts/trading-system.md) 与 [总索引](index.md)。
+已接入 VeighNa 三模块：从 [架构总览](concepts/veighna-architecture.md) 进入 [订单生命周期](concepts/veighna-order-lifecycle.md) 和 [CTA 策略与回测](concepts/cta-strategy-and-backtesting.md)。资料以 Python 框架、CTP 期货接口为当前阅读对象，不代表后续作业的市场和语言已经指定。
+
+下一步结合课程资料检查理解，再按明确作业要求建立运行环境。参见 [待解问题](questions.md)、[系统学习入口](concepts/trading-system.md) 与 [总索引](index.md)。

@@ -1,0 +1,40 @@
+{
+  "download_date": "2026-10-08",
+  "timezone": "Asia/Shanghai",
+  "format": "git archive HEAD source snapshots; no nested Git metadata",
+  "sources": [
+    {
+      "module": "vnpy",
+      "download_url": "https://gitee.com/vnpy/vnpy.git",
+      "branch": "master",
+      "commit": "c6e231caf32b7fc97e6459817fff66458cf7e7c4",
+      "tree": "173e64b0e20b767e858d97bcf0c358bc3363376e",
+      "commit_date": "2026-10-06T17:38:50+08:00",
+      "files": 210,
+      "bytes": 38780251,
+      "version": "4.5.0"
+    },
+    {
+      "module": "vnpy_ctp",
+      "download_url": "https://gitee.com/vnpy/vnpy_ctp.git",
+      "branch": "main",
+      "commit": "1be9bfb5292208e5c258cc769c90be4abe83f9a9",
+      "tree": "3593a247f9af7edcac7a6d138929da0010683c39",
+      "commit_date": "2026-10-05T22:21:43+08:00",
+      "files": 93,
+      "bytes": 38229494,
+      "version": "6.7.11.5"
+    },
+    {
+      "module": "vnpy_ctastrategy",
+      "download_url": "https://gitee.com/vnpy/vnpy_ctastrategy.git",
+      "branch": "main",
+      "commit": "7a8768de9784dda35a7b261a7ade1dbfbff50919",
+      "tree": "7e2f7963b6a7f9ab4088595a74a1fa7354915402",
+      "commit_date": "2026-10-05T22:22:15+08:00",
+      "files": 38,
+      "bytes": 290240,
+      "version": "1.5.0"
+    }
+  ]
+}

@@ -2,13 +2,14 @@
 
 本仓库用于课程作业与量化交易系统开发学习。LLM 将资料整理为持续更新、相互链接的 Markdown Wiki，学习者负责提供资料、提问和确认理解。
 
-当前完成的是**第二节课作业：初始化 Wiki 学习项目**。第一节及其他课次不在本次作业范围内。
+当前记录的是**第二节课作业：初始化 Wiki 学习项目，并接入 VeighNa 三模块源码**。第一节及其他课次不在本次作业范围内。
 
 ## 从这里开始
 
 - [Wiki 总索引](wiki/index.md)：查找全部知识页面。
 - [学习路线](wiki/roadmap.md)：从基础词汇逐步走向系统开发，全部阶段目前待学习。
 - [第二节课作业](wiki/lessons/lesson-02.md)：本次要求、交付与验收记录。
+- [VeighNa 架构与源码阅读](wiki/concepts/veighna-architecture.md)：从三模块职责开始，继续阅读订单生命周期、策略和回测。
 - [待解问题](wiki/questions.md)：保留尚未解决的问题。
 - [维护日志](wiki/log.md)：查看资料接入与知识更新历史。
 
@@ -18,6 +19,10 @@
 llm-wiki.md                  用户提供的 Wiki 方法原文，保持不变
 AGENTS.md                    LLM 的项目规范与维护流程
 raw/                         原始课程资料与其他学习来源
+  vnpy/                      核心框架完整源码快照
+  vnpy_ctp/                  CTP 接口完整源码快照
+  vnpy_ctastrategy/           CTA 策略模块完整源码快照
+  source-lock.json            源码来源、提交和树哈希
 wiki/
   index.md                   全部页面的导航索引
   log.md                     仅追加的维护日志
@@ -37,4 +42,4 @@ wiki/
 
 直接打开 Markdown 即可浏览；也可以将当前目录作为 Obsidian 仓库打开。初始化不需要安装插件、数据库或搜索服务。
 
-目前只接入了 Wiki 方法文档，尚未接入量化课程知识来源，也没有策略代码、回测或实盘结果。项目维护细则见 [AGENTS.md](AGENTS.md)。
+目前已接入 Wiki 方法文档与三个官方 Gitee 源码仓库，完成交易主链路的静态阅读。原始快照包含上游策略示例，但本项目尚未新增策略实现、安装环境或运行回测/实盘。项目维护细则见 [AGENTS.md](AGENTS.md)。
