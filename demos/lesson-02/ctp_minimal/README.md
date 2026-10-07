@@ -30,15 +30,21 @@
    .venv/bin/python demos/lesson-02/ctp_minimal/demo.py
    ```
 
-默认订阅 `rb2701`，作为螺纹钢合约的教学选择，不宣称它是当前主力或已获柜台验证。是否可订阅与当前是否有行情，以服务器回报为准。原始 API 使用合约代码，**不加 `.SHFE` 后缀**。
+默认持续订阅 `rb2701`（螺纹钢）、`ag2612`（白银）、`au2612`（黄金）。原始 API 使用合约代码，**不加 `.SHFE` 后缀**。
+
+选取依据：2026-10-08 查阅[上期所日周数据](https://www.shfe.com.cn/reports/tradedata/dailyandweeklydata/)，可读取的 2026-09-30 页面快照分别显示成交量 482,408、230,063、151,024 手，均为对应品种中成交较活跃的月份。这是近期页面快照，部分收盘字段为空，不作为完整日终统计或 10 月 8 日实时成交量。实际 SimNow 合约是否有效及是否有推送，以柜台回报为准；月份到期或活跃合约变化后可通过 `--symbols` 更换。
 
 覆盖合约或运行一段时间：
 
 ```bash
-.venv/bin/python demos/lesson-02/ctp_minimal/demo.py --symbols rb2701 --timeout 30 --duration 10
+.venv/bin/python demos/lesson-02/ctp_minimal/demo.py --symbols rb2701 ag2612 au2612 --timeout 30 --duration 10
 ```
 
-`--timeout` 是每个连接/登录及首条行情阶段的等待秒数。`--duration` 从收到首条行情后开始计时，默认 0 为持续打印；按 Ctrl+C 退出。连接、认证、登录、订阅或首条行情失败返回退出码 1，正常定时结束或 Ctrl+C 返回 0。
+默认 `--timeout 0 --duration 0`：连接或首条行情迟迟未到时持续等待，每 30 秒打印等待提示；收到推送后逐条打印，直到按 Ctrl+C。没有新的推送时保持运行，不重复制造行情。
+
+断线时 SDK 自动尝试重连；交易通道重新认证登录，行情通道重新登录后订阅全部指定合约。明确的认证、登录、订阅错误或本地请求发送失败仍返回退出码 1，便于发现账号/合约配置问题。
+
+`--timeout` 大于 0 时才启用启动阶段的限时等待；`--duration` 大于 0 时才在首条行情后限时退出。上面的命令用于限时检查；日常持续运行使用不带这些参数的启动命令。正常定时结束或 Ctrl+C 返回 0。
 
 ## 回调顺序
 
@@ -49,10 +55,11 @@
   onRspUserLogin 成功 → 主线程继续
 创建 MdApi → registerFront → init
   onFrontConnected → reqUserLogin
-  onRspUserLogin 成功 → 主线程发送 subscribeMarketData
+  onRspUserLogin 成功 → 回调发送全部 subscribeMarketData（重连后也执行）
   onRspSubMarketData → 打印订阅确认或错误
   onRtnDepthMarketData → 打印行情
-主线程 finally → 关闭已启动 API，恢复原工作目录
+断线 → SDK 自动重连 → 再次登录 → 行情通道恢复全部订阅
+Ctrl+C / 显式限时 / 明确失败 → 主线程 finally 关闭 API，恢复原工作目录
 ```
 
 打印合约、交易日、自然日、更新时间、毫秒、最新价、买一、卖一及累计成交量。下面是**格式示意，不是真实行情记录**：
@@ -71,11 +78,12 @@
 
 | 检查 | 结果 |
 | --- | --- |
-| 离线流程测试 | 9 个 unittest 通过；假 API 验证请求顺序、打印、拒绝响应、发送失败、超时与关闭 |
+| 离线流程测试 | 13 个 unittest 通过；假 API 验证请求顺序、打印、拒绝响应、持续等待、重连恢复订阅及关闭 |
 | 本机环境 | macOS arm64、Python 3.12.2、vnpy 4.5.0、vnpy_ctp 6.7.7.2；依赖检查通过 |
 | SDK 构建与加载 | 从官方完整源码编译安装成功，真实 SDK 加载与交易 API 初始化/关闭成功 |
 | 指定前置 TCP 检查 | 交易端口 30001、行情端口 30011 均返回连接被拒绝 |
-| 使用本地账号运行 | 交易前置连接/登录阶段等待 10 秒后超时，退出码 1，正常关闭 API |
+| 首版限时检查 | 交易前置连接/登录阶段等待 10 秒后超时，退出码 1，正常关闭 API |
+| 本版持续运行检查 | 默认启动真实 SDK 后超过 35 秒仍运行，输出等待提示；Ctrl+C 正常关闭 API，退出码 0 |
 | 登录、订阅与行情端到端 | 尚未验证成功；真实流程尚未进入行情订阅阶段 |
 
 `6.7.11.4` 在本机因 C++ 封装与 Mac SDK 头文件不匹配而编译失败；`6.7.7.2` 的 PyPI 源码包因缺少 framework 而链接失败。使用 [官方 Mac 兼容版本的完整源码](https://github.com/vnpy/vnpy_ctp/releases/tag/6.7.7.2) 可在本机完成构建，所以 Mac 的依赖使用固定 Gitee Git 提交，而非该版本的 PyPI 源码包。原始 `raw/` 快照保持不变；本次执行的 CTP 版本与其 `6.7.11.5` 不同。

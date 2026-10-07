@@ -25,7 +25,7 @@
 - [VeighNa 三模块架构](concepts/veighna-architecture.md)：模块分工、平台装配与指令/回报路径。
 - [VeighNa 订单生命周期](concepts/veighna-order-lifecycle.md)：从买入请求、部分成交到撤单和策略持仓。
 - [CTA 策略与回测](concepts/cta-strategy-and-backtesting.md)：双均线、预热、状态条件、模拟撮合与成本。
-- [底层 CTP 最小 DEMO](concepts/ctp-minimal-demo.md)：认证登录、行情订阅、打印回调、版本差异与验证边界。
+- [底层 CTP 最小 DEMO](concepts/ctp-minimal-demo.md)：认证登录、多合约持续打印、重连恢复订阅、版本差异与验证边界。
 
 ## 项目入口
 

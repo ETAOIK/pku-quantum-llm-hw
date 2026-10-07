@@ -51,10 +51,16 @@
 
 用户要求从底层 Python API 实现连接登录、订阅合约和打印行情，并授权使用其 SimNow 仿真账号。用户将合约选择交给 LLM；本 DEMO 选择 `rb2701` 为默认教学合约，保留参数覆盖，未验证其当前柜台状态。账号信息不写入课次记录或 Git。
 
-交付：[demo.py](../../demos/lesson-02/ctp_minimal/demo.py)、[空账号配置模板](../../demos/lesson-02/ctp_minimal/config.example.json)、[依赖文件](../../demos/lesson-02/ctp_minimal/requirements.txt)、[9 个离线测试](../../demos/lesson-02/ctp_minimal/tests/test_demo.py)、[运行说明](../../demos/lesson-02/ctp_minimal/README.md) 与 [Wiki 讲解](../concepts/ctp-minimal-demo.md)。
+交付：[demo.py](../../demos/lesson-02/ctp_minimal/demo.py)、[空账号配置模板](../../demos/lesson-02/ctp_minimal/config.example.json)、[依赖文件](../../demos/lesson-02/ctp_minimal/requirements.txt)、[离线测试](../../demos/lesson-02/ctp_minimal/tests/test_demo.py)、[运行说明](../../demos/lesson-02/ctp_minimal/README.md) 与 [Wiki 讲解](../concepts/ctp-minimal-demo.md)。
 
 验收：9 个离线测试通过；Mac arm64 / Python 3.12.2 中从官方完整源码编译安装 `vnpy_ctp 6.7.7.2`、核心 `vnpy 4.5.0`，依赖检查通过，真实 SDK 加载、交易 API 启动/关闭成功。用户给定两前置端口均拒绝 TCP 连接；真实 DEMO 在交易连接/登录阶段等待 10 秒后超时退出，尚无登录成功、订阅确认和真实行情。
 
 本地账号配置、虚拟环境和 SDK 运行文件均被 Git 忽略；`raw/` 原始快照保持不变。没有增加下单、策略、回测或自动切换前置的功能。网络恢复后的端到端验证见 [待解问题](../questions.md)。
+
+## 后续调整：持续打印与活跃合约
+
+用户要求脚本保持运行并订阅几个成交活跃的合约。默认改为持续等待连接与首条行情，收到推送后持续打印，Ctrl+C 退出；断线自动重连后重新登录并恢复全部行情订阅。明确账号/合约错误仍报告并退出，显式 `--timeout/--duration` 保留用于限时检查。
+
+默认选择 `rb2701/ag2612/au2612`，近期交易所数据依据见 [运行说明](../../demos/lesson-02/ctp_minimal/README.md)。13 个离线测试通过；真实 SDK 持续运行检查见该说明的验收表。仍未获得真实登录和行情证据。
 
 相关：[总索引](../index.md)

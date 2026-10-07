@@ -164,8 +164,57 @@ class DemoTests(unittest.TestCase):
         with self.assertRaises(TimeoutError):
             demo.wait_for(Event(), [td], "测试连接", 0.001)
         md.onFrontDisconnected(4097)
-        with self.assertRaisesRegex(RuntimeError, "行情连接断开"):
-            demo.wait_for(md.first_tick, [md], "首条行情", 0.1)
+        self.assertFalse(md.ready.is_set())
+        self.assertFalse(md.first_tick.is_set())
+        self.assertEqual(md.error, "")
+        self.assertIn("等待 SDK 自动重连", self.output.getvalue())
+
+    def test_default_wait_does_not_exit_after_thirty_seconds(self):
+        td, md = demo.create_clients(SETTINGS)
+        event = Event()
+        waits = []
+
+        def wait(seconds):
+            waits.append(seconds)
+            if len(waits) == 2:
+                event.set()
+
+        with patch.object(event, "wait", side_effect=wait), \
+                patch.object(demo, "monotonic", side_effect=range(0, 2000, 100)):
+            demo.wait_for(event, [td], "首条行情", 0)
+        self.assertEqual(len(waits), 2)
+        self.assertIn("仍在等待首条行情", self.output.getvalue())
+
+    def test_md_reconnect_logs_in_and_resubscribes_all_symbols(self):
+        td, md = demo.create_clients(SETTINGS)
+        md.symbols = demo.DEFAULT_SYMBOLS
+        md.onFrontConnected()
+        md.onFrontDisconnected(4097)
+        self.assertFalse(md.ready.is_set())
+        self.assertFalse(md.first_tick.is_set())
+        md.onFrontConnected()
+        self.assertEqual([c[1] for c in md.calls if c[0] == "subscribe"],
+                         demo.DEFAULT_SYMBOLS * 2)
+        self.assertEqual(len([c for c in md.calls if c[0] == "login"]), 2)
+        self.assertTrue(md.ready.is_set() and md.first_tick.is_set())
+        for symbol in demo.DEFAULT_SYMBOLS:
+            self.assertEqual(self.output.getvalue().count(f'"InstrumentID": "{symbol}"'), 2)
+
+    def test_continuous_run_exits_only_on_interrupt_and_cleans_up(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(demo, "HERE", Path(tmp)), \
+                patch.object(demo, "version", return_value="6.7.7.2"), \
+                patch.object(demo, "sleep", side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                demo.run(SETTINGS, demo.DEFAULT_SYMBOLS, 0, 0)
+        self.assertTrue(all(api.closed for api in FakeApi.instances))
+
+    def test_cli_defaults_to_three_symbols_and_continuous_wait(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            config = Path(tmp) / "config.json"
+            config.write_text(json.dumps(SETTINGS))
+            with patch.object(demo, "run", return_value=0) as run:
+                self.assertEqual(demo.main(["--config", str(config)]), 0)
+                run.assert_called_once_with(SETTINGS, ["rb2701", "ag2612", "au2612"], 0, 0)
 
     def test_empty_config_rejected_before_loading_sdk(self):
         with tempfile.TemporaryDirectory() as tmp:
