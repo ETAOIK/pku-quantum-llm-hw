@@ -1,6 +1,6 @@
 # Wiki 总索引
 
-更新日期：2026-10-08。当前阶段：第二节课 Wiki、源码阅读与底层 CTP DEMO；离线与 SDK 验证完成，外部连接超时。
+更新日期：2026-10-08。当前阶段：已有第二节 DEMO 验证记录，继续学习 VeighNa 系统分层与三类策略应用。
 
 ## 学习与维护
 
@@ -23,6 +23,7 @@
 
 - [量化交易系统的学习入口](concepts/trading-system.md)：系统环节及问题，连接新的源码学习资料。
 - [VeighNa 三模块架构](concepts/veighna-architecture.md)：模块分工、平台装配与指令/回报路径。
+- [VeighNa 系统分层与策略应用](concepts/veighna-system-layers.md)：标准数据与流程、事件总线、OMS、指令路由，以及时序/组合/价差策略的区别。
 - [VeighNa 订单生命周期](concepts/veighna-order-lifecycle.md)：从买入请求、部分成交到撤单和策略持仓。
 - [CTA 策略与回测](concepts/cta-strategy-and-backtesting.md)：双均线、预热、状态条件、模拟撮合与成本。
 - [底层 CTP 最小 DEMO](concepts/ctp-minimal-demo.md)：认证登录、多合约持续打印、重连恢复订阅、版本差异与验证边界。

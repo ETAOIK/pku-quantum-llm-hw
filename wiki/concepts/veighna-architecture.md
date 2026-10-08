@@ -62,3 +62,5 @@ flowchart LR
 理解检查：策略发出买入请求时，哪一层决定买卖？哪一层翻译 CTP 字段？哪一层实际更新策略的 `pos`？能从源码回答这三个问题，再继续运行与实验。
 
 相关：[系统学习入口](trading-system.md) · [待解问题](../questions.md) · [总索引](../index.md)
+
+进一步按底层接口、中层引擎和策略应用展开，见 [系统分层与三类策略](veighna-system-layers.md)。

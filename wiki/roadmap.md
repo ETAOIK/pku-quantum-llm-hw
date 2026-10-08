@@ -17,4 +17,6 @@
 
 已接入 VeighNa 三模块：从 [架构总览](concepts/veighna-architecture.md) 进入 [订单生命周期](concepts/veighna-order-lifecycle.md) 和 [CTA 策略与回测](concepts/cta-strategy-and-backtesting.md)。资料以 Python 框架、CTP 期货接口为当前阅读对象，不代表后续作业的市场和语言已经指定。
 
+用户报告已完成极简交易 DEMO，进一步学习见 [系统分层与策略应用](concepts/veighna-system-layers.md)：先追踪标准对象与事件，再区分账户缓存、策略持仓和目标仓位，最后比较单标的、组合和价差应用。该讲义是静态学习材料，理解检查和新应用运行验证仍待完成。
+
 下一步结合课程资料检查理解，再按明确作业要求建立运行环境。参见 [待解问题](questions.md)、[系统学习入口](concepts/trading-system.md) 与 [总索引](index.md)。
