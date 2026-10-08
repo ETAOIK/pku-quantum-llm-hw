@@ -28,4 +28,4 @@
 
 [CTP DEMO](ctp-minimal-demo.md) 证明行情、发单与成交链路能工作；本轮历史评估检验信号是否能预测未来收益。两者是不同证据。一次仿真成交不能代替因子验证，本轮候选没有接入 SimNow 或自动交易。
 
-相关：[第二节作业](../lessons/lesson-02.md) · [CTA 回测](cta-strategy-and-backtesting.md) · [总索引](../index.md)
+相关：[机器学习挖掘对照](ml-factor-mining.md) · [第二节作业](../lessons/lesson-02.md) · [CTA 回测](cta-strategy-and-backtesting.md) · [总索引](../index.md)

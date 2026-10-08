@@ -1,0 +1,31 @@
+{
+  "lesson": "02",
+  "round": 2,
+  "max_rounds": 4,
+  "new_candidates": 12,
+  "models": {
+    "ridge": {"alpha": 10.0},
+    "elastic_net": {"alpha": 0.5, "l1_ratio": 0.5, "max_iter": 20000, "tol": 0.0001},
+    "random_forest": {"n_estimators": 300, "max_depth": 3, "min_samples_leaf": 40, "n_jobs": 1},
+    "hist_boost": {"max_iter": 150, "max_leaf_nodes": 7, "min_samples_leaf": 40, "learning_rate": 0.03, "l2_regularization": 10.0, "early_stopping": false}
+  },
+  "feature_sets": ["gap", "context", "combined"],
+  "baselines": ["gap_raw", "gap_volume"],
+  "product_features": "three product indicators for every model; no date/symbol/target as input",
+  "target": "next session open-to-close return in bps; sign may be momentum or reversal",
+  "oof_folds": [["2021-01-01", "2021-06-30"], ["2021-07-01", "2021-12-31"], ["2022-01-01", "2022-06-30"], ["2022-07-01", "2022-12-31"]],
+  "embargo": "fit entry_date strictly before earliest prediction signal date; entire date groups, not shuffled rows",
+  "preprocessing": "StandardScaler inside each linear model pipeline, fitted only on that fold's fit rows; no scaling required for trees",
+  "threshold": "product-specific absolute score 70th percentile on common 2021-2022 OOF cohort for all 14 signals; calibration is training-only, OOF portfolio metrics are mining diagnostics",
+  "selection": "positive OOF mean rankIC and mean net, at least 100 trades, then highest OOF 5bps net Sharpe among 12 ML candidates; no selection using comparison-period metrics",
+  "comparison_period": ["2023-01-01", "2024-12-31"],
+  "comparison_status": "already inspected in round 1; exploratory reused validation, not fresh independent confirmation",
+  "final_fit": "all 2020-2022 available labels before first comparison signal date; frozen throughout 2023-2024",
+  "comparison_gate": "positive rankIC and mean net, at least 50 trades; not final qualification",
+  "holdout": "2025 is not scored, fitted, or used to select models in this round",
+  "roundtrip_cost_bps": [2, 5, 10],
+  "primary_cost_bps": 5,
+  "seed": 20261008,
+  "factor_differences": "score rank correlations, active direction agreement with gap_raw, trading-position overlap, OOF feature-group permutation diagnostics, final-fit linear coefficients",
+  "stopping_rule": "finish this single comparison round; no hyperparameter tuning after inspecting results, no auto-deployment"
+}

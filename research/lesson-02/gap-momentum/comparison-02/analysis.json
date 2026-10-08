@@ -1,0 +1,15 @@
+{
+  "status": "post-hoc descriptive explanation; no tuning or qualification",
+  "round": 2,
+  "holdout_opened": false,
+  "input_summary_sha256": "f0f29c6e43a2b582a7205dc1d14b262a77871e09f5a3a26580d66b6d5bc3244e",
+  "analysis_code_sha256": "8d331b5d675e9e08eb7b93ec5ced3a613e12583d058d9662cbf2d8729fee82c7",
+  "artifacts_sha256": {
+    "descriptive-intervals.csv": "f09e21e7503907645ac9d29d4ba613c6381d0ff752576e65a66acd642e732cec",
+    "first-three-examples.csv": "f342e6060eec733a2eac62f9c1cea419fda7f731d7861ca39e65137ce3921979",
+    "linear-formulas.json": "43f064368d18e583b624200a2ba5ed2ffa16027f33ba0a610077c6eb9abd5b16",
+    "method-comparison.pdf": "ba06b40f502a8bd5b566a3c67f844b37a21a7056d6664c7dc9b4c58bd4bafd87",
+    "method-comparison.png": "92c52783d33f13620d92c5a2429573911e215b232f7059d66b6ee77aab879d33",
+    "same-exposure-controls.csv": "fec09f56ee1ff305344fce08badde1c6a85411cc84fe0eacafde4973c413df19"
+  }
+}
