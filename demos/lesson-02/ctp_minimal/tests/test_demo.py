@@ -29,6 +29,9 @@ class FakeApi:
     login_error = 0
     subscribe_error = 0
     send_result = 0
+    settlement_error = 0
+    order_result = 0
+    order_error = 0
 
     def __init__(self):
         self.calls = []
@@ -63,8 +66,33 @@ class FakeApi:
     def reqUserLogin(self, request, reqid):
         self.calls.append(("login", request.copy(), reqid))
         if not self.send_result:
-            self.onRspUserLogin({}, {"ErrorID": self.login_error}, reqid, True)
+            self.onRspUserLogin({"MaxOrderRef": " 10", "FrontID": 1, "SessionID": 2,
+                                 "TradingDay": "20261008"}, {"ErrorID": self.login_error}, reqid, True)
         return self.send_result
+
+    def reqSettlementInfoConfirm(self, request, reqid):
+        self.calls.append(("settlement", request.copy()))
+        self.onRspSettlementInfoConfirm({}, {"ErrorID": self.settlement_error}, reqid, True)
+        return 0
+
+    def reqQryInstrument(self, request, reqid):
+        self.calls.append(("query_contract", request.copy()))
+        self.onRspQryInstrument({"InstrumentID": "rb2701", "ExchangeID": "SHFE",
+                                 "PriceTick": 1, "IsTrading": True,
+                                 "MinLimitOrderVolume": 1, "MaxLimitOrderVolume": 100},
+                                {"ErrorID": 0}, reqid, True)
+        return 0
+
+    def reqOrderInsert(self, request, reqid):
+        self.calls.append(("order", request.copy()))
+        if self.order_error:
+            self.onRspOrderInsert(request, {"ErrorID": self.order_error}, reqid, True)
+        return self.order_result
+
+    def reqOrderAction(self, request, reqid):
+        self.calls.append(("cancel", request.copy()))
+        self.onRtnOrder({**request, "OrderStatus": "5", "VolumeTraded": 0, "StatusMsg": "已撤单"})
+        return 0
 
     def subscribeMarketData(self, symbol):
         self.calls.append(("subscribe", symbol))
@@ -84,6 +112,7 @@ class DemoTests(unittest.TestCase):
     def setUp(self):
         FakeApi.instances = []
         FakeApi.auth_error = FakeApi.login_error = FakeApi.subscribe_error = FakeApi.send_result = 0
+        FakeApi.settlement_error = FakeApi.order_result = FakeApi.order_error = 0
         package = types.ModuleType("vnpy_ctp")
         api = types.ModuleType("vnpy_ctp.api")
         api.MdApi = api.TdApi = FakeApi
@@ -108,7 +137,7 @@ class DemoTests(unittest.TestCase):
                          ["create_td", "private", "public", "front", "init", "authenticate", "login"])
         self.assertEqual(td.calls[-2][1]["AppID"], "test-app")
         self.assertEqual(td.calls[-1][1]["Password"], "test-secret")
-        self.assertEqual(td.calls[0][1][1], True)
+        self.assertEqual(td.calls[0][1][1], False)
         self.assertEqual([c[0] for c in md.calls], ["create_md", "front", "init", "login", "subscribe"])
         self.assertIn('"InstrumentID": "rb2701"', self.output.getvalue())
         self.assertIn('"LastPrice": 100', self.output.getvalue())
@@ -222,6 +251,117 @@ class DemoTests(unittest.TestCase):
             config.write_text(json.dumps({**SETTINGS, "password": ""}))
             with patch.object(demo, "run") as run, contextlib.redirect_stderr(io.StringIO()):
                 self.assertEqual(demo.main(["--config", str(config)]), 1)
+                run.assert_not_called()
+
+    def trading_client(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        with patch.object(demo, "HERE", Path(temp.name)):
+            td, md = demo.create_clients(SETTINGS, "rb2701")
+        td.journal.parent.mkdir()
+        td.onFrontConnected()
+        return td
+
+    def tick(self, **changes):
+        return {"InstrumentID": "rb2701", "TradingDay": "20261008", "LastPrice": 101,
+                "BidPrice1": 100, "AskPrice1": 102, "BidVolume1": 1, "AskVolume1": 1,
+                "LowerLimitPrice": 90, "UpperLimitPrice": 110, **changes}
+
+    def test_settlement_and_contract_must_be_ready_before_trading(self):
+        FakeApi.settlement_error = 42
+        td = self.trading_client()
+        td.try_buy(self.tick(), 100)
+        self.assertIn("结算确认失败", td.error)
+        self.assertNotIn("query_contract", [c[0] for c in td.calls])
+        self.assertFalse(td.attempted)
+
+    def test_strict_threshold_and_invalid_quotes_do_not_trigger(self):
+        td = self.trading_client()
+        for change in ({"LastPrice": 99}, {"LastPrice": 100}, {"AskPrice1": 1.7976931348623157e308},
+                       {"BidPrice1": float("nan")}, {"AskVolume1": 0}, {"BidPrice1": 103},
+                       {"TradingDay": "20261007"}, {"AskPrice1": 102.5}, {"UpperLimitPrice": 101}):
+            with self.subTest(change=change):
+                td.try_buy(self.tick(**change), 100)
+        self.assertFalse(td.attempted)
+        self.assertFalse(td.journal.exists())
+
+    def test_trigger_sends_one_buy_open_at_ask_and_locks_restart(self):
+        td = self.trading_client()
+        for _ in range(3):
+            td.try_buy(self.tick(), 100)
+        orders = [c[1] for c in td.calls if c[0] == "order"]
+        self.assertEqual(len(orders), 1)
+        request = orders[0]
+        self.assertEqual((request["Direction"], request["CombOffsetFlag"], request["VolumeTotalOriginal"]),
+                         ("0", "0", 1))
+        self.assertEqual(request["LimitPrice"], 102)
+        self.assertEqual(request["OrderRef"], "11")
+        self.assertNotIn("Password", request)
+        self.assertNotIn("test-secret", td.journal.read_text())
+        with patch.object(demo, "HERE", td.journal.parents[1]):
+            with self.assertRaisesRegex(RuntimeError, "已有单次交易记录"):
+                demo.run(SETTINGS, ["rb2701"], 0, 0, "rb2701", 100)
+
+    def test_order_ack_alone_is_not_a_completed_trade_and_fills_are_deduplicated(self):
+        td = self.trading_client()
+        td.try_buy(self.tick(), 100)
+        order = {"InstrumentID": "rb2701", "OrderRef": "11", "FrontID": 1,
+                 "SessionID": 2, "OrderStatus": "0", "VolumeTraded": 1}
+        td.onRtnOrder({**order, "SessionID": 99})
+        self.assertFalse(td.all_traded)
+        td.onRtnOrder(order)
+        self.assertFalse(td.completed.is_set())
+        trade = {"InstrumentID": "rb2701", "OrderRef": "11", "ExchangeID": "SHFE",
+                 "TradeID": "trade-1", "TradeDate": "20261008", "TradeTime": "09:05:00",
+                 "Price": 102, "Volume": 1}
+        td.onRtnTrade({**trade, "OrderRef": "9"})
+        self.assertEqual(td.filled, 0)
+        td.onRtnTrade(trade)
+        td.onRtnTrade(trade)
+        self.assertEqual(td.filled, 1)
+        self.assertTrue(td.completed.is_set())
+        self.assertEqual(json.loads(td.journal.read_text())["state"], "completed")
+
+    def test_rejection_and_send_failure_are_not_retried(self):
+        for attribute, value in (("order_error", 31), ("order_result", -2)):
+            with self.subTest(attribute=attribute):
+                setattr(FakeApi, attribute, value)
+                td = self.trading_client()
+                td.try_buy(self.tick(), 100)
+                td.try_buy(self.tick(), 100)
+                self.assertEqual(len([c for c in td.calls if c[0] == "order"]), 1)
+                self.assertFalse(td.completed.is_set())
+                self.assertTrue(td.error)
+                setattr(FakeApi, attribute, 0)
+
+    def test_disconnect_requires_new_trading_readiness(self):
+        td = self.trading_client()
+        td.onFrontDisconnected(4097)
+        td.try_buy(self.tick(), 100)
+        self.assertFalse(td.attempted)
+
+    def test_invalid_sdk_prices_print_as_null(self):
+        td, md = demo.create_clients(SETTINGS)
+        md.onRtnDepthMarketData(self.tick(AskPrice1=1.7976931348623157e308))
+        self.assertIn('"AskPrice1": null', self.output.getvalue())
+
+    def test_pending_order_is_cancelled_on_exit(self):
+        td = self.trading_client()
+        td.try_buy(self.tick(), 100)
+        td.cancel_pending()
+        self.assertTrue(td.order_done)
+        self.assertFalse(td.completed.is_set())
+        cancel = [c[1] for c in td.calls if c[0] == "cancel"]
+        self.assertEqual(len(cancel), 1)
+        self.assertEqual((cancel[0]["FrontID"], cancel[0]["SessionID"], cancel[0]["OrderRef"]),
+                         (1, 2, "11"))
+
+    def test_cli_rejects_other_fronts_before_running_trade(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            config = Path(tmp) / "config.json"
+            config.write_text(json.dumps(SETTINGS))
+            with patch.object(demo, "run") as run, contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(demo.main(["--config", str(config), "--trade", "--threshold", "100"]), 1)
                 run.assert_not_called()
 
 

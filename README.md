@@ -10,7 +10,7 @@
 - [学习路线](wiki/roadmap.md)：从基础词汇逐步走向系统开发，全部阶段目前待学习。
 - [第二节课作业](wiki/lessons/lesson-02.md)：本次要求、交付与验收记录。
 - [VeighNa 架构与源码阅读](wiki/concepts/veighna-architecture.md)：从三模块职责开始，继续阅读订单生命周期、策略和回测。
-- [第二节 CTP 最小 DEMO](demos/lesson-02/ctp_minimal/README.md)：底层 API 认证登录、行情订阅和打印。
+- [第二节 CTP 最小 DEMO](demos/lesson-02/ctp_minimal/README.md)：底层 API 认证登录、持续行情与单次价格触发仿真交易。
 - [待解问题](wiki/questions.md)：保留尚未解决的问题。
 - [维护日志](wiki/log.md)：查看资料接入与知识更新历史。
 
@@ -44,4 +44,4 @@ wiki/
 
 直接打开 Markdown 即可浏览；也可以将当前目录作为 Obsidian 仓库打开。初始化不需要安装插件、数据库或搜索服务。
 
-目前已接入 Wiki 方法文档与三个官方 Gitee 源码仓库，完成交易主链路的静态阅读，并开发底层 CTP 行情 DEMO。专用环境安装、SDK 加载和离线测试已完成；新 SimNow 账号真实认证登录、三个合约订阅与启动行情推送已验证，连续有效盘口与交易执行仍待验证。尚未新增策略或运行回测/实盘交易。项目维护细则见 [AGENTS.md](AGENTS.md)。
+目前已接入 Wiki 方法文档与三个官方 Gitee 源码仓库，完成交易主链路的静态阅读，并开发底层 CTP 行情 DEMO。专用环境安装、SDK 加载和离线测试已完成；真实 SimNow 认证登录、三个合约连续有效行情，以及一次价格触发买入开仓的下单/成交闭环已验证。尚未进行收益回测或实盘交易，跳空因子挖掘待历史数据。项目维护细则见 [AGENTS.md](AGENTS.md)。

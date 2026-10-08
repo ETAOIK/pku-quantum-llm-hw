@@ -1,6 +1,6 @@
 # Wiki 总索引
 
-更新日期：2026-10-08。当前阶段：第二节 DEMO 的真实认证登录、订阅与启动行情推送已验证；继续系统学习，跳空因子挖掘待历史数据。
+更新日期：2026-10-08。当前阶段：第二节 DEMO 的连续有效行情与单次价格触发仿真成交闭环已验证；继续系统学习，跳空因子挖掘待历史数据。
 
 ## 学习与维护
 
@@ -26,7 +26,7 @@
 - [VeighNa 系统分层与策略应用](concepts/veighna-system-layers.md)：标准数据与流程、事件总线、OMS、指令路由，以及时序/组合/价差策略的区别。
 - [VeighNa 订单生命周期](concepts/veighna-order-lifecycle.md)：从买入请求、部分成交到撤单和策略持仓。
 - [CTA 策略与回测](concepts/cta-strategy-and-backtesting.md)：双均线、预热、状态条件、模拟撮合与成本。
-- [底层 CTP 最小 DEMO](concepts/ctp-minimal-demo.md)：认证登录、多合约持续打印、重连恢复订阅、版本差异与验证边界。
+- [底层 CTP 最小 DEMO](concepts/ctp-minimal-demo.md)：认证登录、多合约持续行情、单次价格触发下单与成交回报、版本差异及验证边界。
 
 ## 项目入口
 
