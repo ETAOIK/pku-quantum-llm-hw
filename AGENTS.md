@@ -43,3 +43,5 @@ Check relative links, index coverage, orphan pages, source attribution, lesson b
 ### Log and delivery
 
 `wiki/log.md` is append-only. Use headings such as `## [2026-10-08] ingest | Source title` and record affected pages and evidence boundaries. Before delivering, check links and Git changes. When the user has authorized GitHub delivery, commit only task files and push to the verified existing remote. Report push success only after Git confirms it.
+
+Use the ETAOIK GitHub account for this repository: set repository-local `user.name` to `ETAOIK` and `user.email` to `82143598+ETAOIK@users.noreply.github.com`. Before committing, verify the effective author and committer identity; before pushing, verify authentication as ETAOIK. Do not use gpenglab or inherit its global Git identity. Do not change other repositories' Git configuration.
