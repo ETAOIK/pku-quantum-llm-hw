@@ -1,0 +1,17 @@
+factor,formula
+gap_raw,log(O_t/C_{t-1})
+gap_atr,(O_t-C_{t-1}) / ATR20_{t-1}
+gap_vol,gap_raw / std20(log close returns)_{t-1}
+gap_breakout,"signed distance of O_t outside [L_{t-1},H_{t-1}] / ATR20_{t-1}"
+gap_trend5,"gap_raw if gap and previous 5-bar close momentum agree, else 0"
+gap_trend20,"gap_raw if gap and previous 20-bar close momentum agree, else 0"
+gap_volume,"gap_raw * clip(V_t / mean20(V)_{t-1},0,3)"
+gap_oi,"gap_raw if hold_t > hold_{t-1}, else 0"
+gap_confirm,"gap_raw if gap and log(C_t/O_t) agree, else 0"
+gap_retained,"gap_raw * clip(sign(gap)*(C_t-C_{t-1})/abs(O_t-C_{t-1}),0,2)"
+gap_unfilled,"gap_raw if L_t>C_{t-1} for up gap or H_t<C_{t-1} for down gap, else 0"
+gap_close_strength,"gap_raw * max(0,sign(gap)*(2*(C_t-L_t)/(H_t-L_t)-1))"
+gap_sum3,sum of latest 3 gap_raw values
+gap_sum5,sum of latest 5 gap_raw values
+gap_acceleration,"gap_raw-previous mean5(gap_raw), only if same direction as current gap"
+gap_compression,"gap_atr * clip(ATR20_{t-1}/ATR5_{t-1},0.5,2)"

@@ -1,0 +1,357 @@
+{
+  "downloaded_at": "2026-10-08T09:19:42.527128+08:00",
+  "source": "Sina Finance / InnerFuturesNewService.getDailyKLine",
+  "url": "https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_V21052021_4_12=/InnerFuturesNewService.getDailyKLine",
+  "params": {
+    "symbol": "<single-contract>",
+    "type": "2021_04_12"
+  },
+  "reference": "https://github.com/akfamily/akshare/blob/main/akshare/futures/futures_zh_sina.py",
+  "evaluation_start": "2020-01-01",
+  "evaluation_end": "2025-12-31",
+  "contracts": [
+    {
+      "symbol": "RB2001",
+      "sha256": "ec95045fbb42942b52156c4be7b642f8a5951b9e02519faa82ed161897e4ec2d",
+      "rows": 243,
+      "first": "2019-01-16",
+      "last": "2020-01-15"
+    },
+    {
+      "symbol": "RB2005",
+      "sha256": "0cebf31742bf871f435231c04577b3553a43ed5d083b41a999fdff47d215c3d8",
+      "rows": 244,
+      "first": "2019-05-16",
+      "last": "2020-05-15"
+    },
+    {
+      "symbol": "RB2010",
+      "sha256": "853c484dc9e7eadce31a230f3d84b18b76c458a6a4e7969a28dd9976b87ea9b2",
+      "rows": 243,
+      "first": "2019-10-16",
+      "last": "2020-10-15"
+    },
+    {
+      "symbol": "AG2006",
+      "sha256": "18f4f4b82d6b618ccb57bcde77c8191da62691a0dc1a347eaaa47eea0992aeae",
+      "rows": 243,
+      "first": "2019-06-18",
+      "last": "2020-06-15"
+    },
+    {
+      "symbol": "AG2012",
+      "sha256": "5c614911e12294a696c891bd3efe116df71ca0ae8a6602a9995f2ff057028fda",
+      "rows": 242,
+      "first": "2019-12-17",
+      "last": "2020-12-15"
+    },
+    {
+      "symbol": "AU2006",
+      "sha256": "adecaf2af83b02b3a68bd4009244be3f8d2961fbc42ac5fdae4b0a774b8d6a08",
+      "rows": 265,
+      "first": "2019-05-16",
+      "last": "2020-06-15"
+    },
+    {
+      "symbol": "AU2012",
+      "sha256": "4bfdb0801f852234ab30eace1d24452d0eb8cc1867eb5be161cf27ec6c3a04b0",
+      "rows": 263,
+      "first": "2019-11-18",
+      "last": "2020-12-15"
+    },
+    {
+      "symbol": "RB2101",
+      "sha256": "88ad18bf0b3302b3f5b626278d000322ee94bd4815ffb76e7791a91090e1ae3c",
+      "rows": 243,
+      "first": "2020-01-16",
+      "last": "2021-01-15"
+    },
+    {
+      "symbol": "RB2105",
+      "sha256": "d6c9118d96be0c9fb76e2cc1d145bb9a0ad1c16b460ad73e457a488f1a6437bb",
+      "rows": 242,
+      "first": "2020-05-18",
+      "last": "2021-05-14"
+    },
+    {
+      "symbol": "RB2110",
+      "sha256": "54cb233b1b80063336225d4f2e208445018e5173af07a83db4ca07eb449b1217",
+      "rows": 243,
+      "first": "2020-10-16",
+      "last": "2021-10-15"
+    },
+    {
+      "symbol": "AG2106",
+      "sha256": "d3d623ca899acb7bd0f0d4640b378e3b6f85cb96567deefdc3909952643c4c56",
+      "rows": 242,
+      "first": "2020-06-16",
+      "last": "2021-06-15"
+    },
+    {
+      "symbol": "AG2112",
+      "sha256": "04e394b62a305f44ae14689b4b433611e9d9b23bfda59fd04ccd208068019531",
+      "rows": 243,
+      "first": "2020-12-16",
+      "last": "2021-12-15"
+    },
+    {
+      "symbol": "AU2106",
+      "sha256": "f3049e02b972c28e61b8895a3b80a62da42b73c52f9b2d7c73a4b7bd83cde352",
+      "rows": 263,
+      "first": "2020-05-18",
+      "last": "2021-06-15"
+    },
+    {
+      "symbol": "AU2112",
+      "sha256": "ba4d55fe2b071b76f01a353a2f04dd62057673bfacd75b6a3fefbe5112c03a04",
+      "rows": 262,
+      "first": "2020-11-18",
+      "last": "2021-12-14"
+    },
+    {
+      "symbol": "RB2201",
+      "sha256": "b00dfabf7dea929ab4e58138ecf83b32b525cfc7e56df865be23ab0e9ed4f891",
+      "rows": 243,
+      "first": "2021-01-18",
+      "last": "2022-01-17"
+    },
+    {
+      "symbol": "RB2205",
+      "sha256": "3238aabb060aaaa1784f5a8c6cde77602fb7d43e63b61e3656e3a341f7309750",
+      "rows": 241,
+      "first": "2021-05-18",
+      "last": "2022-05-16"
+    },
+    {
+      "symbol": "RB2210",
+      "sha256": "5c0fdfe8ae92e2f61c6902e054347294088ee6f73cd822cbc5f1c3d573a1ffae",
+      "rows": 243,
+      "first": "2021-10-18",
+      "last": "2022-10-17"
+    },
+    {
+      "symbol": "AG2206",
+      "sha256": "cdbdf3ca9aee58691ea51920607bae35aa2baa8e5192635d3c683fb87b8b8f07",
+      "rows": 242,
+      "first": "2021-06-16",
+      "last": "2022-06-15"
+    },
+    {
+      "symbol": "AG2212",
+      "sha256": "8d0ff94dccc74af597973cf2ffac2883fd8b2de183575d5aef0ee9c2b477acfb",
+      "rows": 243,
+      "first": "2021-12-16",
+      "last": "2022-12-15"
+    },
+    {
+      "symbol": "AU2206",
+      "sha256": "62eeb1ba78eb6c4cc25fc45c9c8eb1b3544eb558a4ec233fc595a812df4baf9e",
+      "rows": 260,
+      "first": "2021-05-18",
+      "last": "2022-06-13"
+    },
+    {
+      "symbol": "AU2212",
+      "sha256": "c15b99fb905a0317cd8f2efa52ab758b27e333f4b14d8d07a1d1f6173a19cd38",
+      "rows": 265,
+      "first": "2021-11-16",
+      "last": "2022-12-15"
+    },
+    {
+      "symbol": "RB2301",
+      "sha256": "7112b6a934e9e91ad6b107989b5edec8d9cbd83254a67e4edcb6fc09befb714d",
+      "rows": 242,
+      "first": "2022-01-18",
+      "last": "2023-01-16"
+    },
+    {
+      "symbol": "RB2305",
+      "sha256": "97bb8bf2e8377472cbb0b66016f38a45b9ee1580c6b9c1e47d5c05de625c0090",
+      "rows": 243,
+      "first": "2022-05-17",
+      "last": "2023-05-15"
+    },
+    {
+      "symbol": "RB2310",
+      "sha256": "820456f0f336b3906a94b46c3f0ebde942ea35f7bfb1870f1082ea2dd2d6c496",
+      "rows": 242,
+      "first": "2022-10-18",
+      "last": "2023-10-16"
+    },
+    {
+      "symbol": "AG2306",
+      "sha256": "02ceadc51abbf3dfb670ba5f3c03fe1f286fb0db450a4496dd3aa61b52a0edc8",
+      "rows": 245,
+      "first": "2022-06-16",
+      "last": "2023-06-15"
+    },
+    {
+      "symbol": "AG2312",
+      "sha256": "5c08f5d659b80192a73006f04b5841198bf8288bfb88a522ad81dc20331da016",
+      "rows": 243,
+      "first": "2022-12-16",
+      "last": "2023-12-15"
+    },
+    {
+      "symbol": "AU2306",
+      "sha256": "8f247b7b939c679c28091552d7248499e34755105a04e85fcc274c96030648b2",
+      "rows": 265,
+      "first": "2022-05-18",
+      "last": "2023-06-15"
+    },
+    {
+      "symbol": "AU2312",
+      "sha256": "3f8106d6a9e8bdea16a55eb5912af58f52e6f3fd3497cdff8cd6d4ec94198ac6",
+      "rows": 265,
+      "first": "2022-11-16",
+      "last": "2023-12-15"
+    },
+    {
+      "symbol": "RB2401",
+      "sha256": "13ad25743c3797b66b001a9a5ed303b75aaae2ee12162febd4720c531988d696",
+      "rows": 242,
+      "first": "2023-01-17",
+      "last": "2024-01-15"
+    },
+    {
+      "symbol": "RB2405",
+      "sha256": "f24b8601bcaeabdfebd6bb5577773a9891dc6905aa19e6b9146d2875d57945c6",
+      "rows": 242,
+      "first": "2023-05-16",
+      "last": "2024-05-15"
+    },
+    {
+      "symbol": "RB2410",
+      "sha256": "ee604b2068beeb24420223a5b3e71ddecae20a806a771fed8ef729ed14d1c113",
+      "rows": 241,
+      "first": "2023-10-17",
+      "last": "2024-10-15"
+    },
+    {
+      "symbol": "AG2406",
+      "sha256": "18d2e2e01d0ecd353662a5a2b870b7b1648bfac739c8dc9dc5e03c5d0560649d",
+      "rows": 241,
+      "first": "2023-06-16",
+      "last": "2024-06-17"
+    },
+    {
+      "symbol": "AG2412",
+      "sha256": "56e464757c62c8b9de7c0308391264433743e51471c6098a0f0c8e004c4a171e",
+      "rows": 241,
+      "first": "2023-12-18",
+      "last": "2024-12-16"
+    },
+    {
+      "symbol": "AU2406",
+      "sha256": "1b2c20b9926b71e1f625a80943c84e389cf3b7f0706b93c44e684ba3c97ba671",
+      "rows": 263,
+      "first": "2023-05-16",
+      "last": "2024-06-14"
+    },
+    {
+      "symbol": "AU2412",
+      "sha256": "f8c73b8d496cd68c47f97825743924846eb5247ffb2fb437aa15fcb103c49ef2",
+      "rows": 263,
+      "first": "2023-11-16",
+      "last": "2024-12-16"
+    },
+    {
+      "symbol": "RB2501",
+      "sha256": "9ed4a44b54a8d4a369211482f9ea7ee25245431375ef97e9a8fec45937bd2000",
+      "rows": 242,
+      "first": "2024-01-16",
+      "last": "2025-01-15"
+    },
+    {
+      "symbol": "RB2505",
+      "sha256": "ca8975c648300bac3c71e874e22ba5c0bc62f8504eb9be3bc182ab15db9488cc",
+      "rows": 242,
+      "first": "2024-05-16",
+      "last": "2025-05-15"
+    },
+    {
+      "symbol": "RB2510",
+      "sha256": "ed8dda8ac8f57cead3e5e114c15bc73010a93b8ae619d72ed50437b7d16b9fce",
+      "rows": 243,
+      "first": "2024-10-16",
+      "last": "2025-10-15"
+    },
+    {
+      "symbol": "AG2506",
+      "sha256": "6b5401ce45f12298f81559bcf2c6032486d8d66389974ce056f0d6b751feecfe",
+      "rows": 241,
+      "first": "2024-06-18",
+      "last": "2025-06-16"
+    },
+    {
+      "symbol": "AG2512",
+      "sha256": "b4498485e33f62f6e529015564f5fa97f6ada4ae731f84fb3e0796ffae91a1fd",
+      "rows": 242,
+      "first": "2024-12-17",
+      "last": "2025-12-15"
+    },
+    {
+      "symbol": "AU2506",
+      "sha256": "3f16a4138d56b804f8074d0eb661e85a13802f3253696c9586e237fe00e967bd",
+      "rows": 263,
+      "first": "2024-05-16",
+      "last": "2025-06-16"
+    },
+    {
+      "symbol": "AU2512",
+      "sha256": "e445907c25a350ee9207d1be55e0efea6ae656986bf5042c33a30815b09d0ef7",
+      "rows": 263,
+      "first": "2024-11-18",
+      "last": "2025-12-15"
+    },
+    {
+      "symbol": "RB2601",
+      "sha256": "661f954370989df9b9daa4bfd94221a8ac70285de96ef8d567c346dc21d3bed7",
+      "rows": 242,
+      "first": "2025-01-16",
+      "last": "2026-01-15"
+    },
+    {
+      "symbol": "RB2605",
+      "sha256": "91896118ed52cc6a05159a45a17f803f1c959d42580df18a5a93d21a5da77e02",
+      "rows": 242,
+      "first": "2025-05-16",
+      "last": "2026-05-15"
+    },
+    {
+      "symbol": "RB2610",
+      "sha256": "e63ebc7c8a954db5c34214843c0021fc725cb13e2114f4d60113d346e9e4f5d2",
+      "rows": 236,
+      "first": "2025-10-16",
+      "last": "2026-09-30"
+    },
+    {
+      "symbol": "AG2606",
+      "sha256": "a6e34e25ce8c230be387569e30debfcfd258bbe3f57ef05ead27a9bedead8672",
+      "rows": 242,
+      "first": "2025-06-17",
+      "last": "2026-06-15"
+    },
+    {
+      "symbol": "AG2612",
+      "sha256": "59dea0bf6f44c261b01f4eedb4ca96576238b0b4aed97087d97ac9c7e879bcb6",
+      "rows": 193,
+      "first": "2025-12-16",
+      "last": "2026-09-30"
+    },
+    {
+      "symbol": "AU2606",
+      "sha256": "90e472ba6efee7e4ed40fc8ab8db18a3fab16cf70efd4a8b5c8e55bd72682410",
+      "rows": 263,
+      "first": "2025-05-16",
+      "last": "2026-06-15"
+    },
+    {
+      "symbol": "AU2612",
+      "sha256": "2dfb7646dceb272016250e0c5bf583339e44f6d17c0143dca173a9943b492859",
+      "rows": 213,
+      "first": "2025-11-18",
+      "last": "2026-09-30"
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "round": 1,
+  "candidate_count": 16,
+  "max_rounds": 4,
+  "selected_on_train": "gap_volume",
+  "train_eligible": 1,
+  "thresholds": {
+    "gap_raw": {
+      "RB": 0.0028817119471770433,
+      "AG": 0.007324940798369078,
+      "AU": 0.003817803429894458
+    },
+    "gap_atr": {
+      "RB": 0.13439802983379376,
+      "AG": 0.30175377172321594,
+      "AU": 0.3202593988148851
+    },
+    "gap_vol": {
+      "RB": 0.20754914851575754,
+      "AG": 0.44164907042399704,
+      "AU": 0.45447920327287744
+    },
+    "gap_breakout": {
+      "RB": 0.0,
+      "AG": 0.0,
+      "AU": 0.024254615179999366
+    },
+    "gap_trend5": {
+      "RB": 0.0015639393674575376,
+      "AG": 0.0034238534028129173,
+      "AU": 0.0017024201888907382
+    },
+    "gap_trend20": {
+      "RB": 0.0016270750511840773,
+      "AG": 0.003440238202852026,
+      "AU": 0.001756055589126018
+    },
+    "gap_volume": {
+      "RB": 0.0034792401179325194,
+      "AG": 0.009117838335373067,
+      "AU": 0.004601737970610914
+    },
+    "gap_oi": {
+      "RB": 0.0014031526620097903,
+      "AG": 0.003434222381056723,
+      "AU": 0.0018988502717156457
+    },
+    "gap_confirm": {
+      "RB": 0.0012975585423023479,
+      "AG": 0.003676860502092366,
+      "AU": 0.0015815437485923317
+    },
+    "gap_retained": {
+      "RB": 0.002823203427457345,
+      "AG": 0.00774973649851211,
+      "AU": 0.004314802099502813
+    },
+    "gap_unfilled": {
+      "RB": 0.0,
+      "AG": 0.0034706256035418365,
+      "AU": 0.0019592654811030653
+    },
+    "gap_close_strength": {
+      "RB": 0.0005390357214163762,
+      "AG": 0.0014665791289318207,
+      "AU": 0.0006295531469121063
+    },
+    "gap_sum3": {
+      "RB": 0.0057659605128659655,
+      "AG": 0.013798883272799127,
+      "AU": 0.007182702684394758
+    },
+    "gap_sum5": {
+      "RB": 0.007644430428391619,
+      "AG": 0.017571904333815124,
+      "AU": 0.008923835667777163
+    },
+    "gap_acceleration": {
+      "RB": 0.00318518268852766,
+      "AG": 0.007878548340419128,
+      "AU": 0.0044867061427526144
+    },
+    "gap_compression": {
+      "RB": 0.13043478260869565,
+      "AG": 0.30742612502414207,
+      "AU": 0.32611552935019084
+    }
+  },
+  "validation_passed": false,
+  "holdout_opened": false,
+  "holdout_passed": false,
+  "status": "validation_failed_stop",
+  "train": {
+    "factor": "gap_volume",
+    "cost_bps": 5,
+    "samples": 2078,
+    "trades": 625,
+    "rank_ic": 0.002117954541063847,
+    "ic_by_product": {
+      "AG": -0.006571656926825543,
+      "AU": -0.024524926012210527,
+      "RB": 0.03745044656222761
+    },
+    "mean_net_bps": 0.39141744527087596,
+    "sharpe": 0.12785453341171846,
+    "total_return": 0.020110954936074732,
+    "max_drawdown": -0.08095079617995393,
+    "active_win_rate": 0.4832,
+    "mean_net_bps_block95": [
+      -3.045635847037746,
+      3.751199240539134
+    ],
+    "cost_sensitivity": [
+      {
+        "factor": "gap_volume",
+        "cost_bps": 2,
+        "samples": 2078,
+        "trades": 625,
+        "rank_ic": 0.002117954541063847,
+        "ic_by_product": {
+          "AG": -0.006571656926825543,
+          "AU": -0.024524926012210527,
+          "RB": 0.03745044656222761
+        },
+        "mean_net_bps": 1.2499339287873612,
+        "sharpe": 0.40829782177873,
+        "total_return": 0.08590079957131058,
+        "max_drawdown": -0.07501500929637028,
+        "active_win_rate": 0.5104
+      },
+      {
+        "factor": "gap_volume",
+        "cost_bps": 5,
+        "samples": 2078,
+        "trades": 625,
+        "rank_ic": 0.002117954541063847,
+        "ic_by_product": {
+          "AG": -0.006571656926825543,
+          "AU": -0.024524926012210527,
+          "RB": 0.03745044656222761
+        },
+        "mean_net_bps": 0.39141744527087596,
+        "sharpe": 0.12785453341171846,
+        "total_return": 0.020110954936074732,
+        "max_drawdown": -0.08095079617995393,
+        "active_win_rate": 0.4832
+      },
+      {
+        "factor": "gap_volume",
+        "cost_bps": 10,
+        "samples": 2078,
+        "trades": 625,
+        "rank_ic": 0.002117954541063847,
+        "ic_by_product": {
+          "AG": -0.006571656926825543,
+          "AU": -0.024524926012210527,
+          "RB": 0.03745044656222761
+        },
+        "mean_net_bps": -1.0394433605899303,
+        "sharpe": -0.3392506363982499,
+        "total_return": -0.08082414945307836,
+        "max_drawdown": -0.1090871694048734,
+        "active_win_rate": 0.4704
+      }
+    ]
+  },
+  "validation": {
+    "factor": "gap_volume",
+    "cost_bps": 5,
+    "samples": 1391,
+    "trades": 253,
+    "rank_ic": -0.01710625390052089,
+    "ic_by_product": {
+      "AG": -0.008014786811655298,
+      "AU": 0.0059372697241137674,
+      "RB": -0.049241244614021136
+    },
+    "mean_net_bps": -2.8592004064345584,
+    "sharpe": -1.3274772300666122,
+    "total_return": -0.13172629685119075,
+    "max_drawdown": -0.1526561830894827,
+    "active_win_rate": 0.45849802371541504,
+    "mean_net_bps_block95": [
+      -5.794699897714435,
+      -0.03946265469688933
+    ],
+    "cost_sensitivity": [
+      {
+        "factor": "gap_volume",
+        "cost_bps": 2,
+        "samples": 1391,
+        "trades": 253,
+        "rank_ic": -0.01710625390052089,
+        "ic_by_product": {
+          "AG": -0.008014786811655298,
+          "AU": 0.0059372697241137674,
+          "RB": -0.049241244614021136
+        },
+        "mean_net_bps": -2.336473133707284,
+        "sharpe": -1.0873635573800322,
+        "total_return": -0.10946010501986592,
+        "max_drawdown": -0.13335398649335517,
+        "active_win_rate": 0.48221343873517786
+      },
+      {
+        "factor": "gap_volume",
+        "cost_bps": 5,
+        "samples": 1391,
+        "trades": 253,
+        "rank_ic": -0.01710625390052089,
+        "ic_by_product": {
+          "AG": -0.008014786811655298,
+          "AU": 0.0059372697241137674,
+          "RB": -0.049241244614021136
+        },
+        "mean_net_bps": -2.8592004064345584,
+        "sharpe": -1.3274772300666122,
+        "total_return": -0.13172629685119075,
+        "max_drawdown": -0.1526561830894827,
+        "active_win_rate": 0.45849802371541504
+      },
+      {
+        "factor": "gap_volume",
+        "cost_bps": 10,
+        "samples": 1391,
+        "trades": 253,
+        "rank_ic": -0.01710625390052089,
+        "ic_by_product": {
+          "AG": -0.008014786811655298,
+          "AU": 0.0059372697241137674,
+          "RB": -0.049241244614021136
+        },
+        "mean_net_bps": -3.73041252764668,
+        "sharpe": -1.7232648842647265,
+        "total_return": -0.16761403775696382,
+        "max_drawdown": -0.18388268783818296,
+        "active_win_rate": 0.4308300395256917
+      }
+    ]
+  },
+  "artifacts_sha256": {
+    "candidates.csv": "fdec4bad969df22aa8b0fbf095085b1128b0e810888f39d156476aa70f16cf82",
+    "selected-train-daily.csv": "fbfe46771f664afef43b25dcdc08f76620535125b87cd268f9c4cd1614e79274",
+    "selected-train-observations.csv": "11c74f84d946f39bdd8ce866f38ac25d12691bfdc73defdb803777b9bc6151c9",
+    "selected-validation-daily.csv": "0b14c616e901c82dc53d0c8b68e79b90efebe1e78b0dfd0c2606a6c248d87bd6",
+    "selected-validation-observations.csv": "888ac5f4efe83073cf8adeae8da738a91ffec91a4731c4b0c28fe1eb83400461",
+    "train-factor-correlation.csv": "624f8386d96fe2f51b9a8ab92357203ac95a85aa40d4d3efc06a1786ecacd8fc",
+    "train-metrics.csv": "51ac9067c05efc3840fa36da838f312b0b6a72ce70878df2f7d92b8c3eff5867"
+  },
+  "inputs_sha256": {
+    "plan.json": "eab42a925b28a8a2fb46d86307b726a4b2700412104adf410f458df6824658ef",
+    "data-lock.json": "3666f3e6dd38673ee5b34d98fb1884fd7351d69a2c73bfdf9eeb1c843e54e000",
+    "factors.py": "7253d32d35d5fe9d3d150ad8a6b3022f784fc5581d50a91cc86957a564865f4e",
+    "run.py": "ee1de20d428ecbd05462233b2b81997a53c9c68c043745f9804ee6ec40d8007e"
+  }
+}

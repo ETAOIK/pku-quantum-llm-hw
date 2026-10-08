@@ -11,6 +11,7 @@
 - [第二节课作业](wiki/lessons/lesson-02.md)：本次要求、交付与验收记录。
 - [VeighNa 架构与源码阅读](wiki/concepts/veighna-architecture.md)：从三模块职责开始，继续阅读订单生命周期、策略和回测。
 - [第二节 CTP 最小 DEMO](demos/lesson-02/ctp_minimal/README.md)：底层 API 认证登录、持续行情与单次价格触发仿真交易。
+- [第二节跳空动量因子挖掘](research/lesson-02/gap-momentum/README.md)：首轮 16 个候选、公开历史数据、固定评估方案与验证失败记录。
 - [待解问题](wiki/questions.md)：保留尚未解决的问题。
 - [维护日志](wiki/log.md)：查看资料接入与知识更新历史。
 
@@ -20,6 +21,7 @@
 llm-wiki.md                  用户提供的 Wiki 方法原文，保持不变
 AGENTS.md                    LLM 的项目规范与维护流程
 demos/lesson-02/ctp_minimal/  第二节底层 CTP 行情 DEMO 与离线测试
+research/lesson-02/gap-momentum/ 第二节跳空动量挖掘与可复现结果
 raw/                         原始课程资料与其他学习来源
   vnpy/                      核心框架完整源码快照
   vnpy_ctp/                  CTP 接口完整源码快照
@@ -44,4 +46,4 @@ wiki/
 
 直接打开 Markdown 即可浏览；也可以将当前目录作为 Obsidian 仓库打开。初始化不需要安装插件、数据库或搜索服务。
 
-目前已接入 Wiki 方法文档与三个官方 Gitee 源码仓库，完成交易主链路的静态阅读，并开发底层 CTP 行情 DEMO。专用环境安装、SDK 加载和离线测试已完成；真实 SimNow 认证登录、三个合约连续有效行情，以及一次价格触发买入开仓的下单/成交闭环已验证。尚未进行收益回测或实盘交易，跳空因子挖掘待历史数据。项目维护细则见 [AGENTS.md](AGENTS.md)。
+目前已接入 Wiki 方法文档与三个官方 Gitee 源码仓库，完成交易主链路的静态阅读，并开发底层 CTP 行情 DEMO。专用环境安装、SDK 加载和离线测试已完成；真实 SimNow 认证登录、三个合约连续有效行情，以及一次价格触发买入开仓的下单/成交闭环已验证。跳空动量第 1 轮已评估 16 个候选，没有验证合格因子，留出期未做绩效评估；未进行实盘交易。项目维护细则见 [AGENTS.md](AGENTS.md)。

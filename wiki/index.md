@@ -1,6 +1,6 @@
 # Wiki 总索引
 
-更新日期：2026-10-08。当前阶段：第二节 DEMO 的连续有效行情与单次价格触发仿真成交闭环已验证；继续系统学习，跳空因子挖掘待历史数据。
+更新日期：2026-10-08。当前阶段：第二节 DEMO 连续有效行情与单次仿真成交已验证；跳空动量第 1 轮 16 个候选评估完成，验证失败停止，2025 留出期未做绩效评估。
 
 ## 学习与维护
 
@@ -27,6 +27,7 @@
 - [VeighNa 订单生命周期](concepts/veighna-order-lifecycle.md)：从买入请求、部分成交到撤单和策略持仓。
 - [CTA 策略与回测](concepts/cta-strategy-and-backtesting.md)：双均线、预热、状态条件、模拟撮合与成本。
 - [底层 CTP 最小 DEMO](concepts/ctp-minimal-demo.md)：认证登录、多合约持续行情、单次价格触发下单与成交回报、版本差异及验证边界。
+- [跳空动量因子挖掘](concepts/gap-momentum-mining.md)：因子与收益标签的时间关系、换月假跳空、16 个候选与首轮负结果的证据边界。
 
 ## 项目入口
 
@@ -34,3 +35,4 @@
 - [原始资料入口](../raw/README.md)：资料放置与来源保留方式。
 - [LLM 维护规范](../AGENTS.md)：页面约定、课次隔离与维护流程。
 - [DEMO 运行说明](../demos/lesson-02/ctp_minimal/README.md)：安装、配置、启动命令和测试结果。
+- [跳空动量研究报告](../research/lesson-02/gap-momentum/README.md)：数据来源、候选公式、训练选择、验证失败、成本与复现方式。
