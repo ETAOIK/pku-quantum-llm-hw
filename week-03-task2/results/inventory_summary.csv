@@ -1,0 +1,13 @@
+candidate,split,policy,cycles,unresolved_buybacks,net_cny,net_bps_on_traded_notional,win_fraction
+queue_1__60,validation,forced_diagnostic,48,0,-5217.1929521999355,-9.620891429572378,0.020833333333333332
+queue_1__60,validation,cost_gate,0,0,0.0,,
+queue_1__60,test,forced_diagnostic,50,0,-6538.8676142001605,-12.06464302435886,0.0
+queue_1__60,test,cost_gate,0,0,0.0,,
+ridge_all,validation,forced_diagnostic,48,0,-2124.9968399996515,-3.918326899584014,0.08333333333333333
+ridge_all,validation,cost_gate,0,0,0.0,,
+ridge_all,test,forced_diagnostic,50,0,-5753.037818100246,-10.61461759232654,0.0
+ridge_all,test,cost_gate,0,0,0.0,,
+hgb_all,validation,forced_diagnostic,50,0,-4756.424097900071,-8.761682840809058,0.02
+hgb_all,validation,cost_gate,0,0,0.0,,
+hgb_all,test,forced_diagnostic,45,0,-4450.331089199851,-9.222404193498276,0.022222222222222223
+hgb_all,test,cost_gate,0,0,0.0,,

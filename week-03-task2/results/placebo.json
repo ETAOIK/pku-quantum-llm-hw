@@ -1,0 +1,9 @@
+{
+  "observed_ic": 0.06518661141609618,
+  "shared_shift_null_mean": -0.017249323935219545,
+  "null_p025": -0.03338332577040399,
+  "null_p975": 0.005740133727282988,
+  "one_sided_empirical_fraction": 0.004975124378109453,
+  "replicates": 200,
+  "note": "Same-day circular-shift placebo; not a multiple-testing-adjusted or cross-day p-value."
+}

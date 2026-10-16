@@ -1,0 +1,25 @@
+{
+  "candidate_count": 103,
+  "selected": "queue_1__60",
+  "horizon": 60,
+  "validation_net_bps": -14.007796607368004,
+  "validation_gate_passed": false,
+  "test": {
+    "candidate": "queue_1__60",
+    "feature": "queue_1",
+    "horizon": 60,
+    "split": "test",
+    "direction": 1,
+    "ic": 0.06518661141609619,
+    "market_demeaned_ic": 0.060738054947848216,
+    "n": 1229,
+    "mid_edge_bps": 0.2592797569530721,
+    "cross_edge_bps": -4.9786200734775345,
+    "fee_bps": 10.599501980201206,
+    "net_edge_bps": -15.578122053678738,
+    "net_ci_low": -16.10569458984846,
+    "net_ci_high": -14.951008152138312,
+    "clock_blocks": 9,
+    "win_fraction": 0.012205044751830757
+  }
+}

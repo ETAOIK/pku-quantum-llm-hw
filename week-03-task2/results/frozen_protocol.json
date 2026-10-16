@@ -1,0 +1,53 @@
+{
+  "seed": 20260923,
+  "features": [
+    "queue_1",
+    "depth_5",
+    "depth_10",
+    "microprice_bps",
+    "book_ofi_30",
+    "trade_pressure_30",
+    "trade_pressure_60",
+    "trade_count_pressure_30",
+    "large_trade_pressure_30",
+    "add_pressure_30",
+    "cancel_pressure_30",
+    "net_resting_flow_30",
+    "cancel_ratio_60",
+    "momentum_30",
+    "momentum_60",
+    "momentum_180",
+    "relative_momentum_60",
+    "vwap_gap_60",
+    "spread_bps",
+    "volatility_60"
+  ],
+  "horizons_seconds": [
+    15,
+    30,
+    60,
+    180,
+    300
+  ],
+  "tails": "per-symbol training 10% and 90%, fixed thereafter",
+  "models": [
+    "ridge_all",
+    "ridge_price_only",
+    "hgb_all"
+  ],
+  "selection": "max validation mean nonoverlapping tail net bps; no test selection",
+  "inventory": "1000 pre-existing sellable shares per stock; at most one sell-buy cycle per stock",
+  "commission": 0.0001,
+  "min_commission_cny": 5,
+  "transfer": 1e-05,
+  "sell_stamp": 0.0005,
+  "quote_availability_delay_seconds": 1,
+  "entry_delay_seconds": 5,
+  "max_quote_age_seconds": 8,
+  "splits": {
+    "train": "09:35-11:25",
+    "validation": "13:05-13:55",
+    "test": "14:05-14:50"
+  },
+  "initial_cash_buffer_cny": 100000
+}
