@@ -1,0 +1,96 @@
+{
+  "archive_name": "feathers.zip",
+  "sha256": "5766950f2a105244867b842709cf4bad890e4e11df0eebeeaa4fec42dc05803d",
+  "members": {
+    "open": {
+      "member": "feathers/open.feather",
+      "bytes": 32297546,
+      "sha256": "a75e7aa3dac9e101f2c3cfff85728b26a29ea50ccc6ec46c315a36e8476d5f92"
+    },
+    "high": {
+      "member": "feathers/high.feather",
+      "bytes": 32377890,
+      "sha256": "88313810bedab563416c94e90a60cc0cf089fd62923be1bcad0e2680558a5cf7"
+    },
+    "low": {
+      "member": "feathers/low.feather",
+      "bytes": 32156250,
+      "sha256": "e5c7da4b6fcdae3cc50fe2f6d30faf36b83c68c25d6db5faba079716748fa8ea"
+    },
+    "close": {
+      "member": "feathers/close.feather",
+      "bytes": 32431858,
+      "sha256": "621b7b381f96c7d162317ac67c8831aebfc5e78f4b1ecd59159fc93e0ea109e7"
+    },
+    "amt": {
+      "member": "feathers/amt.feather",
+      "bytes": 52398330,
+      "sha256": "cd2a2f43e273963f93230163813aafaddb52307d1805ee1a583aeab931e418c2"
+    },
+    "cumadj": {
+      "member": "feathers/cumadj.feather",
+      "bytes": 5877058,
+      "sha256": "5ebc13623115743c39b2cb56dbe365f10c4c72d6fed6ac4041d9377895439173"
+    },
+    "num_trades": {
+      "member": "feathers/num_trades.feather",
+      "bytes": 37495202,
+      "sha256": "37a89a5b9af8a00deafc089be614f7784167ae283277337f31552c809f28a142"
+    }
+  },
+  "rows": 1643,
+  "securities": 5451,
+  "first_date": "2020-01-02",
+  "last_date": "2026-10-16",
+  "fields": {
+    "open": {
+      "missing_cells": 1115203,
+      "nonpositive_cells": 0,
+      "last_date_nonmissing": 5226,
+      "last_covered_date": "2026-10-16"
+    },
+    "high": {
+      "missing_cells": 1115203,
+      "nonpositive_cells": 0,
+      "last_date_nonmissing": 5226,
+      "last_covered_date": "2026-10-16"
+    },
+    "low": {
+      "missing_cells": 1115203,
+      "nonpositive_cells": 0,
+      "last_date_nonmissing": 5226,
+      "last_covered_date": "2026-10-16"
+    },
+    "close": {
+      "missing_cells": 1115203,
+      "nonpositive_cells": 0,
+      "last_date_nonmissing": 5226,
+      "last_covered_date": "2026-10-16"
+    },
+    "amt": {
+      "missing_cells": 1115203,
+      "nonpositive_cells": 23229,
+      "last_date_nonmissing": 5226,
+      "last_covered_date": "2026-10-16"
+    },
+    "cumadj": {
+      "missing_cells": 1115205,
+      "nonpositive_cells": 0,
+      "last_date_nonmissing": 5224,
+      "last_covered_date": "2026-10-16"
+    },
+    "num_trades": {
+      "missing_cells": 1120410,
+      "nonpositive_cells": 23254,
+      "last_date_nonmissing": 0,
+      "last_covered_date": "2026-10-15"
+    }
+  },
+  "ohlc_inconsistent_cells": 0,
+  "raw_abs_return_above_40pct": 318,
+  "adjusted_abs_return_above_40pct": 123,
+  "present_before_2025_absent_since_2025": 176,
+  "adjustment_interpretation": "raw * cumadj; plausible from discontinuity reduction, vendor unconfirmed",
+  "amount_unit": "assumed CNY from scale; vendor unconfirmed",
+  "num_trades_unit": "assumed count from filename; not share volume"
+}

@@ -1,0 +1,9 @@
+{
+  "selected": "low_vol_60",
+  "rule": "highest validation net Sharpe; tie by candidate id; test never selects",
+  "validation_sharpe": 1.3396582989896835,
+  "test_seen_for_selection": false,
+  "candidate_count": 18,
+  "protocol_sha256": "a33290f12df63df917adcc5885d0b09d06a7b2d14ae0271fe3c96d6cddf57205",
+  "candidates_sha256": "2ae6638e7e7415d8acf6e591f5715dbf16d559c614bbad7d9f3889111511b3aa"
+}

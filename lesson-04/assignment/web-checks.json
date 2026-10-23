@@ -1,0 +1,11 @@
+{
+  "full_period_custom_formula_matches_builtin": true,
+  "dates_match": true,
+  "formula": "-ts_std(returns(close, 1), 60)",
+  "condition": "True",
+  "days": 424,
+  "terminal_positions": 0,
+  "return": 0.040253992873571676,
+  "source": "local browser form submission, run 9f32d72acd1b",
+  "direct_status_sha256": "a139741264dbca6d3ddbbae5343cb0bd9d6ac943ff5a71416e353a49735f151b"
+}

@@ -1,0 +1,96 @@
+{
+  "protocol": {
+    "version": "issue-8-20261023",
+    "frozen_on": "2026-10-23 Asia/Shanghai; retrospective revision",
+    "test": [
+      "2025-01-02",
+      "2026-09-30"
+    ],
+    "initial_cash": 1000000000.0,
+    "top_n": 50,
+    "rebalance_every": 5,
+    "invested_fraction": 0.95,
+    "min_history": 120,
+    "min_price": 2.0,
+    "min_amount_20": 20000000.0,
+    "participation": 0.1,
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0,
+    "sell_tax_bps_before_20230828": 10.0,
+    "sell_tax_bps_from_20230828": 5.0,
+    "open_gap_guard": 0.048,
+    "stale_write_down_days": 100000,
+    "fill_feasibility": "a daily zero-amount bar is treated as having no executable opening; daily amount is only an ex-post suspension proxy, never a sizing input",
+    "selection": "reuse low_vol_60 selected by the original 2023-2024 validation; no assignment-period re-selection",
+    "accounting": "fractional adjusted units at raw_price * cumadj; synthetic total-return research assumption, not raw-share corporate-action ledger",
+    "liquidation_days": 20
+  },
+  "data_sha256": "5766950f2a105244867b842709cf4bad890e4e11df0eebeeaa4fec42dc05803d",
+  "status_sha256": "a139741264dbca6d3ddbbae5343cb0bd9d6ac943ff5a71416e353a49735f151b",
+  "selected": {
+    "days": 424,
+    "total_return": 0.040253992873571454,
+    "cagr": 0.02373280308834902,
+    "sharpe": 0.27100585951232153,
+    "annual_vol": 0.10834818639939528,
+    "max_drawdown": -0.13142824477005544,
+    "mean_exposure": 0.8858687938735723,
+    "annual_one_way_turnover": 6.380007751801493,
+    "fees": 7727566.322142055,
+    "slippage_cost": 11022258.940016143,
+    "min_cash": -5.960464477539063e-08,
+    "max_stale_value_fraction": 0.0189998210669306,
+    "final_equity": 1040253992.8735715,
+    "final_cash": 1040253992.8735715,
+    "terminal_positions": 0,
+    "filled_orders": 5923,
+    "st_buys": 0,
+    "first_fill": "2025-01-02",
+    "conversions": []
+  },
+  "equal_weight": {
+    "days": 424,
+    "total_return": 0.38532085017096773,
+    "cagr": 0.21374930415126614,
+    "sharpe": 1.0168710189064254,
+    "annual_vol": 0.21326806147280244,
+    "max_drawdown": -0.20761999647412832,
+    "mean_exposure": 0.9337710402990747,
+    "annual_one_way_turnover": 2.8136316231072978,
+    "fees": 4302896.759615016,
+    "slippage_cost": 6009997.274253042,
+    "min_cash": 30883708.282592103,
+    "max_stale_value_fraction": 0.007684185243435295,
+    "final_equity": 1385320850.1709678,
+    "final_cash": 1379564688.099424,
+    "terminal_positions": 43,
+    "filled_orders": 2017623,
+    "st_buys": 0,
+    "first_fill": "2025-01-02",
+    "conversions": [
+      {
+        "date": "2025-03-17",
+        "old": "600837.SH",
+        "new": "601211.SH",
+        "ratio": 0.62,
+        "old_adjusted_units": 855.2542784994778,
+        "new_adjusted_units": 9034.684708355155
+      },
+      {
+        "date": "2025-09-16",
+        "old": "601989.SH",
+        "new": "600150.SH",
+        "ratio": 0.1339,
+        "old_adjusted_units": 29206.49316361139,
+        "new_adjusted_units": 2607.7404696211242
+      }
+    ]
+  },
+  "status_known_price_coverage": 1.0,
+  "checks": {
+    "no_st_buys": true,
+    "first_day_built": true,
+    "final_cleared": true,
+    "days_424": true
+  }
+}

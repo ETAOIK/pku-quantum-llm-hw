@@ -1,0 +1,64 @@
+{
+  "checked_on": "2026-10-16 Asia/Shanghai",
+  "unit_tests_passed": 38,
+  "javascript_syntax": "node --check passed",
+  "browser_errors": [],
+  "browser_completed": [
+    "initial frozen result",
+    "custom formula check",
+    "custom low-vol full backtest",
+    "negative lag rejected",
+    "new reversal/trend rule full backtest",
+    "holdings date selector",
+    "stock-code search",
+    "daily ledger tab",
+    "order CSV download"
+  ],
+  "desktop_1440px_no_page_horizontal_overflow": true,
+  "narrow_574px_no_page_horizontal_overflow": true,
+  "narrow_formula_parameter_expand_collapse": true,
+  "browser_viewport_restored": true,
+  "original_engine_and_report_source_hashes_unchanged": true,
+  "custom_runs_marked_exploration": true,
+  "original_results_overwritten": false,
+  "arbitrary_python_execution": false,
+  "server_bind": "127.0.0.1",
+  "screenshots": [
+    "web/workbench.jpg",
+    "web/workbench-mobile.jpg"
+  ],
+  "real_data_runs": [
+    {
+      "name": "我的反转趋势策略",
+      "formula": "-returns(close, 5)",
+      "condition": "close > ts_mean(close, 20)",
+      "start": "2023-01-01",
+      "end": "2024-12-31",
+      "days": 484,
+      "orders": 2906,
+      "net_return": -0.44273230341798375,
+      "seconds": 0.57,
+      "cash_and_holdings_reconcile": true
+    },
+    {
+      "name": "自定义低波动校验",
+      "formula": "-ts_std(returns(close, 1), 60)",
+      "condition": "True",
+      "start": "2025-01-01",
+      "end": "2026-10-16",
+      "days": 431,
+      "orders": 4950,
+      "net_return": 0.0812213122598564,
+      "seconds": 0.66,
+      "cash_and_holdings_reconcile": true,
+      "daily_ledger_exactly_matches_original": true
+    }
+  ],
+  "browser_download_matches_runtime_orders": true,
+  "markdown_files_checked": 29,
+  "relative_links_checked": 503,
+  "broken_links": [],
+  "wiki_index_coverage": true,
+  "stock_search_exact_filtered_count": 65,
+  "task_source_whitespace_files": 15
+}

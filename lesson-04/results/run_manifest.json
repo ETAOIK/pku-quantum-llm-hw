@@ -1,0 +1,21 @@
+{
+  "completed_at": "2026-10-16T19:52:13.337732+08:00",
+  "source": "5766950f2a105244867b842709cf4bad890e4e11df0eebeeaa4fec42dc05803d",
+  "protocol": "a33290f12df63df917adcc5885d0b09d06a7b2d14ae0271fe3c96d6cddf57205",
+  "code_sha256": {
+    "data.py": "5107e68daf4a22c56e5a319b6bf1e2593f50db1bc7011c1f8fcdc513fa83ef83",
+    "engine.py": "60aa3830da4730eda890bcffaeef5592bbe1e331102ea519fcdc821456b6ba6e",
+    "report.py": "d74a59f3d13258a234c2fe0b657e6dd96551c694a7087574a2fb118b7958a2de",
+    "run.py": "9d1121883636c1a708de2601c2412b31952b2c4fdb33f6bc954db0b85276eb2d",
+    "signals.py": "7a0febf800623ac4ed295119f5e261ff80db36ef41aeb4e59e2f8accbaeba7fa"
+  },
+  "environment": {
+    "python": "3.12.2",
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "pyarrow": "16.1.0",
+    "matplotlib": "3.9.2"
+  },
+  "command": "python3 lesson-04/run.py --data /path/to/feathers.zip",
+  "test_policy": "Only selected candidate, predeclared benchmarks and fixed sensitivities evaluated"
+}

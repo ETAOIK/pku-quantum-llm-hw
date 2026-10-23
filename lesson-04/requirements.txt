@@ -1,0 +1,7 @@
+numpy==1.26.4
+pandas==2.2.2
+pyarrow==16.1.0
+matplotlib==3.9.2
+pytest==7.4.4
+Flask==3.0.3
+baostock==0.9.4

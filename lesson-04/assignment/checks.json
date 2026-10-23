@@ -1,0 +1,16 @@
+{
+  "no_st_buys": true,
+  "first_day_built": true,
+  "final_cleared": true,
+  "days_424": true,
+  "cash_ledger_reconciles": true,
+  "fees_match_1bp_plus_sell_5bp": true,
+  "signals_before_execution": true,
+  "no_negative_cash_beyond_roundoff": true,
+  "terminal_cash_equals_equity": true,
+  "capacity_uses_previous_20days": true,
+  "inventory_never_short": true,
+  "terminal_inventory_from_fills_is_zero": true,
+  "daily_equity_rebuilt_from_fills_and_prices": true,
+  "buy_status_independently_joined_to_provider": true
+}

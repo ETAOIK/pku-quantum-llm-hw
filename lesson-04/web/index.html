@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>策略回测工作台 · 第四节课</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">Q<span>↗</span></span><span>QUANT LAB<small>当代量化系统原理与实现 · 第四节课</small></span></a>
+    <div class="top-actions"><span id="data-status" class="status"><i></i>正在读取行情</span><a href="/assignment/report.html" target="_blank" rel="noopener">课程作业简报 ↗</a><a href="/report" target="_blank" rel="noopener">原始研究报告 ↗</a><span class="local-label">LOCAL</span></div>
+  </header>
+  <div class="workspace">
+    <aside class="sidebar mobile-collapsed" id="configuration">
+      <div class="section-kicker">BACKTEST CONFIGURATION</div>
+      <h1>配置回测</h1><button type="button" id="toggle-config" aria-expanded="false" aria-controls="config-form">展开参数 ↓</button><p class="muted intro">选择策略，或把你的交易想法写成公式。</p>
+      <form id="config-form">
+        <label for="strategy">交易策略</label>
+        <select id="strategy" name="strategy"><option value="low_vol_60">60 日低波动</option></select>
+        <div id="strategy-description" class="strategy-description"></div>
+        <section id="formula-panel" hidden>
+          <label for="strategy-name">策略名称</label><input id="strategy-name" name="name" value="我的反转趋势策略" maxlength="50">
+          <div class="label-row"><label for="formula">选股评分公式</label><span>分数越高，越优先买入</span></div>
+          <textarea id="formula" name="formula" rows="3" spellcheck="false">-returns(close, 5)</textarea>
+          <label for="condition">持仓条件 <span class="label-note">不满足时不选入</span></label>
+          <textarea id="condition" name="condition" rows="2" spellcheck="false">close &gt; ts_mean(close, 20)</textarea>
+          <div class="formula-presets"><button type="button" data-preset="reversal">反转 + 趋势</button><button type="button" data-preset="trend">均线趋势</button><button type="button" data-preset="blend">动量 + 低波</button></div>
+          <button type="button" id="check-formula" class="check-button">检查公式</button>
+          <p id="formula-feedback" class="small-feedback" aria-live="polite"></p>
+          <details class="syntax-help"><summary>可用字段与函数</summary><p><code>close open high low</code> 为复权价；<code>amount</code> 为成交金额；<code>num_trades</code> 为成交笔数。</p><p><code>returns(x, n)</code>：过去 n 日收益<br><code>lag(x, n)</code>：n 日前的值<br><code>ts_mean / ts_std / ts_min / ts_max(x, n)</code>：历史滚动统计<br><code>rank(x)</code>：当日可投池内百分位排名<br><code>abs(x)</code>：绝对值<br><code>where(条件, 值1, 值2)</code>：按条件取值</p><p>支持 + − × /、比较、<code>and / or / not</code>。窗口为 1–252 的正整数。持仓条件填 <code>True</code> 表示不过滤；不支持未来引用和任意 Python 代码。</p></details>
+        </section>
+        <div class="field-divider"></div>
+        <div class="two-fields"><div><label for="start">开始日期</label><input type="date" id="start" name="start" value="2025-01-01" required></div><div><label for="end">结束日期</label><input type="date" id="end" name="end" value="2026-10-16" required></div></div>
+        <label for="initial-cash">初始资金 <span class="label-note">元</span></label><input type="number" id="initial-cash" name="initial_cash" min="10000" max="2000000000" step="10000" value="1000000" required>
+        <div class="two-fields"><div><label for="top-n">持仓股票数</label><input type="number" id="top-n" name="top_n" min="1" max="500" value="50" required></div><div><label for="rebalance">调仓间隔 <span class="label-note">交易日</span></label><input type="number" id="rebalance" name="rebalance_every" min="1" max="60" value="5" required></div></div>
+        <details class="cost-settings" open><summary>仓位与交易成本</summary><div class="two-fields"><div><label for="invested">目标仓位 <span class="label-note">%</span></label><input type="number" id="invested" name="invested_percent" min="5" max="100" value="95" step="1" required></div><div><label for="participation">成交额限额 <span class="label-note">%</span></label><input type="number" id="participation" name="participation_percent" min="0.01" max="10" value="1" step="0.01" required></div></div><div class="two-fields"><div><label for="commission">单边佣金 <span class="label-note">bps</span></label><input type="number" id="commission" name="commission_bps" min="0" max="100" value="3" step="0.1" required></div><div><label for="slippage">单边滑点 <span class="label-note">bps</span></label><input type="number" id="slippage" name="slippage_bps" min="0" max="100" value="5" step="0.1" required></div></div><p class="field-help">1 bps = 0.01%。成交额限额按前 20 日平均金额计算；卖出税费沿用研究设定。</p></details>
+        <button class="run-button" id="run-button" type="submit" disabled><span>▶</span> 运行回测</button>
+        <p id="run-feedback" class="run-feedback" role="status" aria-live="polite">正在准备原始数据，已有研究结果可先查看。</p>
+      </form>
+      <div class="sidebar-footer"><span class="dot"></span>信号日收盘计算 · 下一交易日开盘执行</div>
+    </aside>
+    <main>
+      <div class="page-heading"><div><div class="section-kicker">STRATEGY WORKBENCH</div><h2>策略回测工作台</h2><p>从交易想法出发，核对每一笔模拟成交与资金变化。</p></div><div class="run-selector"><label for="run-history">查看运行</label><select id="run-history"><option value="original">原始验证 · 60 日低波动</option></select></div></div>
+      <div id="error-banner" class="error-banner" role="alert" hidden></div>
+      <section class="run-heading"><div><span id="run-mode" class="pill">原始冻结实验</span><strong id="run-title">60 日低波动</strong><span id="run-range" class="muted">正在读取结果…</span></div><a id="download-daily" class="text-link" href="/api/export/original/daily">↓ 导出逐日结果</a></section>
+      <div class="metrics-grid" id="metrics"><article><span>累计净收益</span><strong>—</strong><small>已计交易成本</small></article><article><span>年化收益</span><strong>—</strong><small>按 252 个交易日</small></article><article><span>最大回撤</span><strong>—</strong><small>包含初始资金</small></article><article><span>夏普比率</span><strong>—</strong><small>无风险收益假设为零</small></article><article><span>较等权基准</span><strong>—</strong><small>总收益百分点差</small></article><article><span>累计费用 / 滑点</span><strong>—</strong><small>人民币元</small></article></div>
+      <section class="panel chart-panel"><div class="panel-heading"><div><h3>组合表现</h3><p id="chart-subtitle">策略与同区间、同成本可投股票池等权组合</p></div><div class="legend"><span><i class="strategy-line"></i>当前策略</span><span><i class="benchmark-line"></i>等权基准</span></div></div><div class="chart-label">累计净值 <span>起始 = 1.00</span></div><div class="chart-wrap" id="nav-wrap"><svg id="nav-chart" role="img" aria-label="策略与等权基准净值图"></svg><div id="chart-tooltip" class="chart-tooltip" hidden></div></div><div class="chart-label drawdown-label">策略回撤 <span>%</span></div><div class="chart-wrap compact"><svg id="drawdown-chart" role="img" aria-label="策略回撤图"></svg></div><div class="chart-footer"><span id="trade-count">— 个交易日</span><span>鼠标移至曲线可查看当日净值、现金与持仓数</span></div></section>
+      <section id="result-note" class="result-note"></section>
+      <section class="panel detail-panel"><div class="tabs" role="tablist" aria-label="回测明细"><button class="active" type="button" data-tab="orders" role="tab" aria-selected="true">委托与成交</button><button type="button" data-tab="holdings" role="tab" aria-selected="false">持仓快照</button><button type="button" data-tab="daily" role="tab" aria-selected="false">每日账本</button><button type="button" data-tab="candidates" role="tab" aria-selected="false">原始候选比较</button><button type="button" data-tab="audit" role="tab" aria-selected="false">数据与假设</button></div><div class="table-toolbar"><div><input id="table-query" aria-label="按股票代码搜索" placeholder="搜索股票代码，如 000001"><select id="holding-date" aria-label="持仓快照日期" hidden></select><span id="table-description" class="muted">包括未成交和部分成交的请求</span></div><a id="download-table" class="text-link" href="/api/export/original/orders">↓ 导出 CSV</a></div><div id="table-container" class="table-container"><p class="empty-state">正在读取账本…</p></div><div id="pagination" class="pagination"><span id="table-count"></span><div><button id="previous-page" type="button">上一页</button><span id="page-number"></span><button id="next-page" type="button">下一页</button></div></div></section>
+      <footer class="main-footer"><span id="source-summary">7 份日线面板 · 只读数据源</span><span>日线研究回测 · 复权份额账本</span></footer>
+    </main>
+  </div>
+</body>
+</html>

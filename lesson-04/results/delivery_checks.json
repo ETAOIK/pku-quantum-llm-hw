@@ -1,0 +1,25 @@
+{
+  "compressed_orders_lossless": true,
+  "compressed_holdings_lossless": true,
+  "summary_reproduced_exactly": true,
+  "all_candidate_scores_reproduced_exactly": true,
+  "relative_links_valid": true,
+  "wiki_pages_indexed": true,
+  "markdown_files_checked": 28,
+  "relative_links_checked": 482,
+  "broken_links": [],
+  "unindexed_pages": [],
+  "unit_tests_passed": 16,
+  "runtime_integrity_checks_passed": 40,
+  "figures_visually_reviewed": [
+    "final-test",
+    "validation-candidates",
+    "cost-sensitivity",
+    "data-coverage"
+  ],
+  "same_frozen_protocol_for_reproduction": true,
+  "source_code_hashes_match_manifest": true,
+  "svg_files_parse": 4,
+  "task_source_document_whitespace_files": 10,
+  "prior_lesson_and_raw_sources_unchanged": true
+}

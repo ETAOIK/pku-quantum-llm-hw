@@ -1,0 +1,5 @@
+.venv/
+runtime/
+data/
+assignment/equal_weight_orders.csv.gz
+assignment/equal_weight_holdings.csv.gz

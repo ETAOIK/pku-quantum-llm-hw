@@ -1,0 +1,17 @@
+{
+  "provider": "BaoStock",
+  "query": "query_history_k_data_plus",
+  "fields": "date,code,preclose,close,tradestatus,isST",
+  "start": "2024-12-01",
+  "end": "2026-09-30",
+  "adjustflag": "3",
+  "source_documentation": "https://pypi.org/project/baostock/",
+  "fetched_at": "2026-10-23T18:58:51.511493+08:00",
+  "archive_sha256": "5766950f2a105244867b842709cf4bad890e4e11df0eebeeaa4fec42dc05803d",
+  "status_sha256": "a139741264dbca6d3ddbbae5343cb0bd9d6ac943ff5a71416e353a49735f151b",
+  "requested_symbols": 5273,
+  "rows": 2305401,
+  "st_rows": 78720,
+  "errors": [],
+  "known_price_coverage": 1.0
+}

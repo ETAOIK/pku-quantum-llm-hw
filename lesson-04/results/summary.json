@@ -1,0 +1,110 @@
+{
+  "selected": "low_vol_60",
+  "metrics": {
+    "selected": {
+      "days": 431,
+      "total_return": 0.0812213122598564,
+      "cagr": 0.04671733498318886,
+      "sharpe": 0.4537512350930461,
+      "annual_vol": 0.11540960585943574,
+      "max_drawdown": -0.15409606682978472,
+      "mean_exposure": 0.9449588166922309,
+      "annual_one_way_turnover": 7.676536648781197,
+      "fees": 15229.855189804432,
+      "slippage_cost": 14056.654283570693,
+      "min_cash": 30973.334285105695,
+      "max_stale_value_fraction": 0.018813860013597545,
+      "benchmark_excess_total_return": -0.2859627195043988
+    },
+    "equal_weight": {
+      "days": 431,
+      "total_return": 0.3671840317642552,
+      "cagr": 0.20064948059754717,
+      "sharpe": 0.9700918648209244,
+      "annual_vol": 0.21208130736330444,
+      "max_drawdown": -0.20844381319348015,
+      "mean_exposure": 0.9530711650891589,
+      "annual_one_way_turnover": 1.4293144452701456,
+      "fees": 3244.187797249556,
+      "slippage_cost": 3161.58455985656,
+      "min_cash": 27533.056292440942,
+      "max_stale_value_fraction": 0.00784499881416594
+    },
+    "liquid_50": {
+      "days": 431,
+      "total_return": 0.02612526112301894,
+      "cagr": 0.01519323154855412,
+      "sharpe": 0.22918452384409463,
+      "annual_vol": 0.37696901498158397,
+      "max_drawdown": -0.46052846836316985,
+      "mean_exposure": 0.9472934737511759,
+      "annual_one_way_turnover": 6.944468080760592,
+      "fees": 15654.388566024296,
+      "slippage_cost": 14442.324220693225,
+      "min_cash": 0.0,
+      "max_stale_value_fraction": 0.04205746823235289
+    },
+    "selected_stress": {
+      "days": 431,
+      "total_return": 0.05205698215847354,
+      "cagr": 0.030115840625041246,
+      "sharpe": 0.3151932529956485,
+      "annual_vol": 0.11541647946957388,
+      "max_drawdown": -0.16214924041887724,
+      "mean_exposure": 0.9452617815532759,
+      "annual_one_way_turnover": 7.67752224747673,
+      "fees": 30056.934409562273,
+      "slippage_cost": 27740.77077520496,
+      "min_cash": 30319.455029037315,
+      "max_stale_value_fraction": 0.018841177325093713
+    },
+    "equal_weight_stress": {
+      "days": 431,
+      "total_return": 0.3605218338408813,
+      "cagr": 0.19722519237054104,
+      "sharpe": 0.9568310747721389,
+      "annual_vol": 0.21202045436598382,
+      "max_drawdown": -0.20897356455493976,
+      "mean_exposure": 0.9531269179738482,
+      "annual_one_way_turnover": 1.4292955115756163,
+      "fees": 6472.495391119602,
+      "slippage_cost": 6306.977141342162,
+      "min_cash": 27441.894431049048,
+      "max_stale_value_fraction": 0.007845478937503451
+    },
+    "selected_zero_cost": {
+      "days": 431,
+      "total_return": 0.11116702776303056,
+      "cagr": 0.06357122291860118,
+      "sharpe": 0.5920066048626924,
+      "annual_vol": 0.1154521772886724,
+      "max_drawdown": -0.14597287046785423,
+      "mean_exposure": 0.9446562829965689,
+      "annual_one_way_turnover": 7.675719257073278,
+      "fees": 0.0,
+      "slippage_cost": 0.0,
+      "min_cash": 31552.797361830017,
+      "max_stale_value_fraction": 0.01878660846646921
+    }
+  },
+  "bootstrap": {
+    "annualized_mean_excess": -0.15337109975340701,
+    "ci_95": [
+      -0.42968354172095663,
+      0.1659960724438814
+    ],
+    "block_days": 20,
+    "repetitions": 2000,
+    "seed": 20261016
+  },
+  "gate_conditions": {
+    "test_sharpe_above_0_5": false,
+    "test_cagr_positive": true,
+    "beats_equal_weight": false,
+    "bootstrap_lower_positive": false,
+    "double_cost_excess_positive": false
+  },
+  "statistical_gate_passed": false,
+  "deployment_validated": false,
+  "boundary": "Conditional daily-bar synthetic-account research; vendor metadata, corporate-action ledger and opening fills not validated"
+}
