@@ -1,0 +1,40 @@
+{
+  "created_at": "2026-10-29T13:19:02+08:00",
+  "source_sha256": "5766950f2a105244867b842709cf4bad890e4e11df0eebeeaa4fec42dc05803d",
+  "status_sha256": "a139741264dbca6d3ddbbae5343cb0bd9d6ac943ff5a71416e353a49735f151b",
+  "protocol_sha256": "c307849117a852f12b925b60f056fa743a8bfc22773120002a3087856490f8b8",
+  "code_sha256": {
+    "lesson-05/mining.py": "59d165b012dfc1aa43f8517382a2b9caafa8844b76211f6eaf5136562df8b5b2",
+    "lesson-05/factor.py": "025825a4f69c09fa9d063c2fe16cb1b8b8c4f4566a327ce8324a127f9a470005",
+    "lesson-04/data.py": "5107e68daf4a22c56e5a319b6bf1e2593f50db1bc7011c1f8fcdc513fa83ef83",
+    "lesson-04/signals.py": "7a0febf800623ac4ed295119f5e261ff80db36ef41aeb4e59e2f8accbaeba7fa",
+    "lesson-04/formula.py": "d5f2b62328c7211b3fe22f23c8f241d53ff2554fcc745b09d49844211613cb1e",
+    "lesson-04/course.py": "2dee0522182c5d083f7b1f637e03d7ae7deeccb25cf3a1293cd99c994032f93f"
+  },
+  "checks": {
+    "base/equal_weight": true,
+    "base/low_amount_20": true,
+    "base/reversal_5": true,
+    "base/low_vol_60": true,
+    "base/reversal_low_vol60": true,
+    "base/intraday_reversal_20": true,
+    "cost_stress/equal_weight": true,
+    "cost_stress/low_amount_20": true,
+    "cost_stress/reversal_5": true,
+    "cost_stress/low_vol_60": true,
+    "cost_stress/reversal_low_vol60": true,
+    "cost_stress/intraday_reversal_20": true,
+    "small_cash/equal_weight": true,
+    "small_cash/low_amount_20": true,
+    "small_cash/reversal_5": true,
+    "small_cash/low_vol_60": true,
+    "small_cash/reversal_low_vol60": true,
+    "small_cash/intraday_reversal_20": true,
+    "source_unchanged": true,
+    "all_30_factors_saved": true,
+    "all_270_summary_rows": true,
+    "selection_written_before_followup": true
+  },
+  "deployment_validated": false,
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed"
+}

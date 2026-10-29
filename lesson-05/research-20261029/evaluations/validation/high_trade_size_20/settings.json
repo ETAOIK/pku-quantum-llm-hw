@@ -1,0 +1,14 @@
+{
+  "factor": "high_trade_size_20",
+  "formula": null,
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "高平均每笔金额",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

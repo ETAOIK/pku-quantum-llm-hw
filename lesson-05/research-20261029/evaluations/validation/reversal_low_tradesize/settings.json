@@ -1,0 +1,14 @@
+{
+  "factor": "reversal_low_tradesize",
+  "formula": "rank(-returns(close, 5)) + rank(-ts_mean(amount / num_trades, 20))",
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "反转+低每笔金额",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

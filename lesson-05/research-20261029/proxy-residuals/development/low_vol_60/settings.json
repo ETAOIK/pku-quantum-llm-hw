@@ -1,0 +1,9 @@
+{
+  "factor": "low_vol_60",
+  "stage": "development",
+  "controls": [
+    "log raw close price",
+    "log 20-day mean amount",
+    "20-day return volatility"
+  ]
+}

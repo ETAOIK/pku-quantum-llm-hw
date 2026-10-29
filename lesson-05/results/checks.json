@@ -1,0 +1,53 @@
+{
+  "verified_on": "2026-10-23 Asia/Shanghai",
+  "automated_tests": {
+    "command": "python3 -m pytest -q lesson-04/tests lesson-05/tests",
+    "passed": 60,
+    "failed": 0
+  },
+  "batch_checks": {
+    "source_unchanged": true,
+    "constant_ic_undefined": true,
+    "constant_groups_not_fabricated": true,
+    "opposite_direction_ic": true,
+    "all_candidates_saved": true
+  },
+  "real_browser": {
+    "custom_formula": "-ts_std(returns(close, 1), 60)",
+    "custom_evaluation_id": "2a82d7d9a0b7",
+    "daily_rows": 1696,
+    "custom_equals_builtin": true,
+    "download_equals_run": true,
+    "future_reference_rejected": true,
+    "backtest_id": "d252cff79015",
+    "backtest_days": 424,
+    "max_absolute_equity_difference_cny": 0.0,
+    "browser_errors_or_warnings": [],
+    "desktop": {
+      "viewport_width": 1280,
+      "document_scroll_width": 1280,
+      "screenshot": "web/workbench.png"
+    },
+    "mobile": {
+      "viewport_width": 574,
+      "document_scroll_width": 574,
+      "screenshot": "web/workbench-mobile.png"
+    },
+    "saved_html_rendered": true,
+    "saved_html_20_day_switch": true,
+    "all_fixed_runs_available_after_reload": 21,
+    "constant_and_noise_switch_verified": true
+  },
+  "limitations": [
+    "retrospective exploration, not an independent holdout",
+    "HAC intervals unadjusted for multiple comparisons",
+    "missing labels may bias group returns",
+    "accounting assumptions inherited from lesson 04"
+  ],
+  "documentation": {
+    "checked_markdown_pages": 31,
+    "local_links_checked": 497,
+    "broken_relative_links": [],
+    "wiki_pages_not_in_index": []
+  }
+}

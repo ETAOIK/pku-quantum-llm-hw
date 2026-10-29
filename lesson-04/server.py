@@ -137,17 +137,21 @@ class Workbench:
             threading.Thread(target=self.execute, args=(run_id, settings), daemon=True).start()
             return run_id
 
+    def compute_score(self, settings):
+        if settings["strategy"] == "custom":
+            score = evaluate(settings["formula"], self.panels, self.market)
+            condition = evaluate(settings["condition"], self.panels, self.market, condition=True)
+            market = {**self.market, "eligible": self.market["eligible"] & condition}
+        else:
+            market = self.market
+            score = score_signal(settings["strategy"], self.panels, market)
+        return score, market
+
     def execute(self, run_id, settings):
         started = time.monotonic()
         try:
             config = settings["config"]
-            if settings["strategy"] == "custom":
-                score = evaluate(settings["formula"], self.panels, self.market)
-                condition = evaluate(settings["condition"], self.panels, self.market, condition=True)
-                market = {**self.market, "eligible": self.market["eligible"] & condition}
-            else:
-                market = self.market
-                score = score_signal(settings["strategy"], self.panels, market)
+            score, market = self.compute_score(settings)
             if not (np.isfinite(score) & self.market["eligible"]).any():
                 raise ValueError("公式在可投股票池中没有有限分数；请检查窗口、条件和除零")
             weights = make_targets(score, market, config)
@@ -305,14 +309,6 @@ def create_app(workbench):
     @app.get("/api/audit")
     def audit():
         return jsonify(workbench.audit)
-
-    @app.get("/report")
-    def report():
-        return send_from_directory(HERE, "report.html")
-
-    @app.get("/assignment/<path:name>")
-    def assignment(name):
-        return send_from_directory(HERE / "assignment", name)
 
     return app
 

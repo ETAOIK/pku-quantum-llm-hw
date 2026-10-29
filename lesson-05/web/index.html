@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>第五课 · 因子评价实验台</title><link rel="stylesheet" href="/factor-static/style.css"><script src="/factor-static/app.js" defer></script></head>
+<body>
+<header><a class="brand" href="/">Q<span>QUANT LAB<small>因子研究与评价</small></span></a><nav><span id="status">载入历史数据…</span><a href="/backtest">策略回测 ↗</a></nav></header>
+<div class="workspace">
+<aside><div class="eyebrow">FACTOR RESEARCH</div><h1>评价一个因子</h1><p class="muted">先确认信号是否有用，再看扣费后能否交易。</p>
+<form id="form">
+<label for="factor">因子</label><select id="factor"><option value="low_vol_60">60 日低波动</option></select>
+<div id="custom" hidden><label for="name">名称</label><input id="name" value="我的反转因子" maxlength="60"><label for="formula">评分公式</label><textarea id="formula" rows="3" spellcheck="false">-returns(close, 5)</textarea></div>
+<label for="condition">股票筛选条件</label><textarea id="condition" rows="2" spellcheck="false">True</textarea>
+<details><summary>公式语法与例子</summary><p><code>-returns(close, 5)</code>：过去五日跌得越多，分数越高。</p><p><code>-ts_std(returns(close, 1), 60)</code>：过去六十日波动越小，分数越高。</p><p>字段：复权 <code>close / open / high / low</code>；<code>amount</code> 为成交额，<code>num_trades</code> 为笔数。</p><p>函数：<code>returns / lag / ts_mean / ts_std / ts_min / ts_max(x,n)</code>、<code>rank(x)</code>、<code>abs(x)</code>、<code>where(条件,值1,值2)</code>。窗口为 1–252 正整数。支持算术、比较和 <code>and / or / not</code>。</p></details>
+<div class="two"><div><label for="start">开始日期</label><input id="start" type="date" value="2025-01-02" required></div><div><label for="end">结束日期</label><input id="end" type="date" value="2026-09-30" required></div></div>
+<label>收益评价周期 · 交易日</label><div class="checks"><label><input type="checkbox" name="horizon" value="1" checked>1 日</label><label><input type="checkbox" name="horizon" value="5" checked>5 日</label><label><input type="checkbox" name="horizon" value="10" checked>10 日</label><label><input type="checkbox" name="horizon" value="20" checked>20 日</label></div>
+<div class="two"><div><label for="quantiles">分组数量</label><input id="quantiles" type="number" min="2" max="10" value="5" required></div><div><label for="direction">预先指定方向</label><select id="direction"><option value="1">越大越好 +1</option><option value="-1">越小越好 −1</option></select></div></div>
+<label for="preprocess">截面预处理</label><select id="preprocess"><option value="raw">原始因子值</option><option value="winsor_zscore">1% 缩尾后标准化</option></select>
+<button id="run" class="primary" type="submit" disabled>运行因子评价</button><p id="feedback" role="status" class="muted small">正在载入数据</p>
+</form>
+<div class="aside-note"><b>本次评价口径</b><p>日 t 收盘形成评分，t+1 开盘进入，t+1+h 开盘退出。退出超过结束日的标签不评分。</p><p id="universe">沿用第四课证券池，状态覆盖读取后展示。</p><p>这些历史已被查看，本次统一标为回顾性探索。分组差是毛收益诊断，尚未扣费。</p></div>
+</aside>
+<main>
+<div id="error" role="alert" hidden></div>
+<div class="page-title"><div><div class="eyebrow">FACTOR EVALUATION / 05</div><h2 id="title">把评价工具做可靠</h2><p id="subtitle" class="muted">IC、分组、稳定性与数据覆盖，一起看。</p></div><select id="history" aria-label="切换评价结果"><option>暂无结果</option></select></div>
+<div class="notice">因子是给股票打分的规则。IC 看分数与未来收益的相关性；策略回测还要处理资金、仓位、成交与成本。评价工具要能暴露坏信号和数据缺口。</div>
+<section id="empty" class="panel"><h3>从已有因子开始</h3><p>可使用低波动、反转、动量等既有评分，也可以输入自定义公式。常数和随机对照用来检查评价系统的行为。</p></section>
+<section id="result" hidden>
+<div class="toolbar"><div id="horizons" class="pills"></div><span class="tag">回顾性探索 · 毛收益诊断</span></div>
+<div id="metrics" class="metrics"></div>
+<div id="diagnosis" class="diagnosis"></div>
+<div class="charts"><article class="panel"><div class="panel-title"><h3>Rank IC 时间序列</h3><span>每日截面 Spearman 相关</span></div><div id="ic-chart"></div><p class="muted small">浅线为每日值，深线为 20 日滚动均值。空缺表示当日不可计算。</p></article><article class="panel"><div class="panel-title"><h3>分组平均远期收益</h3><span id="group-caption"></span></div><div id="group-chart"></div><p class="muted small">Q1 为最低分组，最高组分数最高。先分组再配对标签；缺失标签比例见下表。</p></article></div>
+<article class="panel"><div class="panel-title"><h3>分组覆盖与收益</h3><a id="export-quantiles">导出分组 CSV ↓</a></div><div class="scroll"><table id="groups"></table></div><p class="muted small">“形成样本”是成熟标签日期中按信号日确定的成员数。缺失收益只在统计时剔除，不回填、不重新分组；这些均值可能仍有缺失偏差。</p></article>
+<div class="charts"><article class="panel"><div class="panel-title"><h3>按年看稳定性</h3><span>按信号日期归属年度</span></div><div class="scroll"><table id="years"></table></div><p class="muted small">跨年标签按信号年份归属。2026 为部分年度；各时段并非独立留出。</p></article><article class="panel"><div class="panel-title"><h3>月度 Rank IC</h3><span>绿色正相关 / 橙色负相关</span></div><div id="months" class="months"></div></article></div>
+<article class="panel"><div class="panel-title"><h3>逐日评价明细</h3><a id="export-daily">导出完整 CSV ↓</a></div><div class="scroll"><table id="daily"></table></div><p class="muted small">展示当前周期最后 12 个信号日，含尚未成熟的尾部标签。完整序列与开仓/退出日期可导出。</p></article>
+<div class="bridge panel"><div><h3>继续检查：这个因子能否形成可交易策略？</h3><p class="muted">将相同评分、方向、预处理与筛选条件交给第四课引擎，以当前默认资金、前 N 名、调仓与成本核算。不是对分组差做空。</p></div><button id="backtest" type="button">运行扣费策略回测 ↗</button><a id="backtest-result" href="/backtest" hidden>查看本次资金与成交账本 ↗</a></div>
+</section>
+<article id="comparison-panel" class="panel" hidden><div class="panel-title"><h3>固定候选与对照 · 同口径比较</h3><span>固定批量运行，未按结果自动反转方向</span></div><div class="scroll"><table id="comparison"></table></div><p class="muted small">原始值、正方向、5 组，2025-01-02 至 2026-09-30；诊断规则是教学设置，无多重检验校正。点击因子名称可加载该次完整评价。交互结果在上方另存。</p></article>
+<footer>IC = Pearson 相关；Rank IC = Spearman 相关。ICIR = Rank IC 的均值 / 时间标准差，不年化。95% HAC 区间考虑短期序列相关，不能消除挖掘偏差。<a href="https://quantopian.github.io/alphalens/alphalens.html#alphalens.performance.factor_information_coefficient">方法参考：Alphalens</a>。缺行业、市值与完整公司行为，尚未做行业/规模中性化。</footer>
+</main></div>
+</body></html>

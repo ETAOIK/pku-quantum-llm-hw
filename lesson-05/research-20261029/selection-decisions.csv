@@ -1,0 +1,31 @@
+factor,decision
+reversal5_lowvol20,existing baseline
+reversal_10,existing baseline
+reversal_low_vol60,selected
+intraday_reversal_20,selected
+intraday_reversal_5,predefined candidate limit
+reversal_low_amount,predefined candidate limit
+reversal_20,predefined candidate limit
+relative_amount_5_20,predefined candidate limit
+reversal_5,existing baseline
+amount_shock_reversal,predefined candidate limit
+low_vol_20,existing baseline
+range_low_amount,predefined candidate limit
+trade_count_shock,predefined candidate limit
+reversal_3,existing baseline
+range_reversal_20,existing baseline
+reversal_low_tradesize,predefined candidate limit
+reversal_1,existing baseline
+low_vol_60,existing baseline
+range_reversal_5,existing baseline
+low_amount_20,existing baseline
+gap_reversal_5,existing baseline
+gap_reversal_1,existing baseline
+overnight_reversal_20,development direction/spread failed
+low_trade_size_20,existing baseline
+trend_pullback,development direction/spread failed
+momentum_120_skip5,existing baseline
+high_trade_size_20,existing baseline
+momentum_20,existing baseline
+momentum_60,existing baseline
+high_amount_20,existing baseline

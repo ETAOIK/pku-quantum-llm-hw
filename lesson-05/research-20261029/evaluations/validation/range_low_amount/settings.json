@@ -1,0 +1,14 @@
+{
+  "factor": "range_low_amount",
+  "formula": "rank(-(close - ts_min(low, 20)) / (ts_max(high, 20) - ts_min(low, 20))) + rank(-ts_mean(amount, 20))",
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "区间低位+低成交额",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

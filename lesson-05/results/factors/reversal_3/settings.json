@@ -1,0 +1,27 @@
+{
+  "version": "lesson05-20261023",
+  "start": "2025-01-02",
+  "end": "2026-09-30",
+  "horizons": [
+    1,
+    5,
+    10,
+    20
+  ],
+  "quantiles": 5,
+  "min_pairs": 30,
+  "preprocess": "raw",
+  "direction": 1,
+  "mode": "retrospective-exploration",
+  "label": "adjusted_open[t+1+h] / adjusted_open[t+1] - 1; exit <= end",
+  "inference": "95% normal HAC interval; Bartlett lags=max(5,h); diagnostic, no multiple-testing correction",
+  "groups": "formed from signal-day scores before examining future returns; ties kept together",
+  "returns": "gross endpoint returns; overlapping horizons are never compounded into NAV",
+  "factor": "reversal_3",
+  "name": "3 日反转",
+  "formula": null,
+  "condition": "True",
+  "source_sha256": "5766950f2a105244867b842709cf4bad890e4e11df0eebeeaa4fec42dc05803d",
+  "historical_status": true,
+  "status_sha256": "a139741264dbca6d3ddbbae5343cb0bd9d6ac943ff5a71416e353a49735f151b"
+}

@@ -1,0 +1,5 @@
+horizon,signal_days,mature_days,ic_days,pearson_ic_mean,rank_ic_mean,rank_ic_std,rank_icir,rank_ic_positive_fraction,rank_ic_ci_low,rank_ic_ci_high,factor_coverage,label_coverage,paired_samples,missing_labels,group_valid_days,spread_mean,quantile_monotonicity,top_turnover,bottom_turnover,rank_autocorrelation,diagnosis
+1,424,422,0,,,,,,,,1,0.9993788252,2044852,1271,0,,,,,,不可评价：截面常数或配对样本不足
+5,424,418,0,,,,,,,,1,0.9986554186,2023928,2725,0,,,,,,不可评价：截面常数或配对样本不足
+10,424,413,0,,,,,,,,1,0.9982016122,1998748,3601,0,,,,,,不可评价：截面常数或配对样本不足
+20,424,403,0,,,,,,,,1,0.9981106636,1949905,3691,0,,,,,,不可评价：截面常数或配对样本不足

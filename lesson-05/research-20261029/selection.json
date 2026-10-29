@@ -1,0 +1,19 @@
+{
+  "selected": [
+    "reversal_low_vol60",
+    "intraday_reversal_20"
+  ],
+  "stage": "validation",
+  "followup_not_used_for_selection": true,
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "rules": {
+    "family": "all 30 existing and proposed factors, primary horizon only",
+    "development": "positive mean Rank IC and positive mean top-minus-bottom gross return",
+    "validation": "positive mean Rank IC, positive spread, factor coverage >= 0.8, label coverage >= 0.95, one-sided normal HAC p adjusted with Benjamini-Yekutieli <= 0.1",
+    "order": "descending validation HAC lower bound, then mean Rank IC, then identifier",
+    "max_new_candidates": 2,
+    "max_absolute_mutual_correlation": 0.9,
+    "correlation_period": "validation only; average same-day Spearman on common eligible stocks",
+    "fallback": "if no new candidate passes, select none; retain the fixed baseline backtests"
+  }
+}

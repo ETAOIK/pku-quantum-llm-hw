@@ -1,0 +1,14 @@
+{
+  "factor": "trend_pullback",
+  "formula": "rank(returns(close, 60)) - rank(returns(close, 5))",
+  "stage": "development",
+  "start": "2025-01-02",
+  "end": "2025-06-30",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "中期趋势+短期回撤",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

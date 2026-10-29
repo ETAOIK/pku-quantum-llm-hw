@@ -1,0 +1,15 @@
+{
+  "version": "lesson05-20261023",
+  "start": "2025-01-02",
+  "end": "2026-09-30",
+  "horizons": [1, 5, 10, 20],
+  "quantiles": 5,
+  "min_pairs": 30,
+  "preprocess": "raw",
+  "direction": 1,
+  "mode": "retrospective-exploration",
+  "label": "adjusted_open[t+1+h] / adjusted_open[t+1] - 1; exit <= end",
+  "inference": "95% normal HAC interval; Bartlett lags=max(5,h); diagnostic, no multiple-testing correction",
+  "groups": "formed from signal-day scores before examining future returns; ties kept together",
+  "returns": "gross endpoint returns; overlapping horizons are never compounded into NAV"
+}

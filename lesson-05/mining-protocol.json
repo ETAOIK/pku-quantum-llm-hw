@@ -1,0 +1,58 @@
+{
+  "version": "20261029-round1",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "splits": {
+    "development": ["2025-01-02", "2025-06-30"],
+    "validation": ["2025-07-01", "2025-12-31"],
+    "followup": ["2026-01-01", "2026-09-30"]
+  },
+  "primary_horizon": 5,
+  "diagnostic_horizons": [1, 5, 20],
+  "quantiles": 5,
+  "direction": 1,
+  "min_pairs": 30,
+  "preprocess": "raw",
+  "selection": {
+    "family": "all 30 existing and proposed factors, primary horizon only",
+    "development": "positive mean Rank IC and positive mean top-minus-bottom gross return",
+    "validation": "positive mean Rank IC, positive spread, factor coverage >= 0.8, label coverage >= 0.95, one-sided normal HAC p adjusted with Benjamini-Yekutieli <= 0.1",
+    "order": "descending validation HAC lower bound, then mean Rank IC, then identifier",
+    "max_new_candidates": 2,
+    "max_absolute_mutual_correlation": 0.9,
+    "correlation_period": "validation only; average same-day Spearman on common eligible stocks",
+    "fallback": "if no new candidate passes, select none; retain the fixed baseline backtests"
+  },
+  "new_candidates": {
+    "reversal_20": "-returns(close, 20)",
+    "intraday_reversal_5": "-ts_mean(close / open - 1, 5)",
+    "intraday_reversal_20": "-ts_mean(close / open - 1, 20)",
+    "overnight_reversal_20": "-ts_mean(open / lag(close, 1) - 1, 20)",
+    "amount_shock_reversal": "-returns(close, 5) * ts_mean(amount, 5) / ts_mean(amount, 20)",
+    "reversal_low_amount": "rank(-returns(close, 5)) + rank(-ts_mean(amount, 20))",
+    "reversal_low_tradesize": "rank(-returns(close, 5)) + rank(-ts_mean(amount / num_trades, 20))",
+    "reversal_low_vol60": "rank(-returns(close, 5)) + rank(-ts_std(returns(close, 1), 60))",
+    "trend_pullback": "rank(returns(close, 60)) - rank(returns(close, 5))",
+    "range_low_amount": "rank(-(close - ts_min(low, 20)) / (ts_max(high, 20) - ts_min(low, 20))) + rank(-ts_mean(amount, 20))",
+    "relative_amount_5_20": "-ts_mean(amount, 5) / ts_mean(amount, 20)",
+    "trade_count_shock": "-ts_mean(num_trades, 5) / ts_mean(num_trades, 20)"
+  },
+  "fixed_baselines": ["low_amount_20", "reversal_5", "low_vol_60"],
+  "proxy_controls": ["log raw close price", "log 20-day mean amount", "20-day return volatility"],
+  "proxy_residual_rule": "same-day OLS: score and proxies winsorized at 1/99 percentiles, intercept plus standardized proxies; no industry or market-cap neutrality claim",
+  "backtest": {
+    "period": "followup only; fresh account; lesson-04 course engine",
+    "initial_cash": 1000000000,
+    "rebalance_every": 5,
+    "top_n": 50,
+    "invested_fraction": 0.95,
+    "commission_bps": 1,
+    "slippage_bps": 5,
+    "sell_tax_bps": 5,
+    "liquidation_days": 20,
+    "cost_stress": "commission and slippage doubled; sell tax unchanged",
+    "small_cash_sensitivity": 1000000,
+    "benchmark": "same engine and universe, dynamic equal weight, matched capital/costs"
+  },
+  "bootstrap": {"block_days": 20, "repetitions": 1000, "seed": 20261029},
+  "stop_rule": "run this fixed round once; no formula/direction changes based on followup; no deployment claim"
+}

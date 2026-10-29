@@ -1,0 +1,146 @@
+{
+  "checked_on": "2026-10-29 Asia/Shanghai",
+  "checks": {
+    "270_summary_rows": true,
+    "30_factors": true,
+    "selection_file_precedes_followup": true,
+    "development_label_boundaries": true,
+    "validation_label_boundaries": true,
+    "followup_label_boundaries": true,
+    "ledger_base/equal_weight": true,
+    "ledger_base/intraday_reversal_20": true,
+    "ledger_base/low_amount_20": true,
+    "ledger_base/low_vol_60": true,
+    "ledger_base/reversal_5": true,
+    "ledger_base/reversal_low_vol60": true,
+    "ledger_cost_stress/equal_weight": true,
+    "ledger_cost_stress/intraday_reversal_20": true,
+    "ledger_cost_stress/low_amount_20": true,
+    "ledger_cost_stress/low_vol_60": true,
+    "ledger_cost_stress/reversal_5": true,
+    "ledger_cost_stress/reversal_low_vol60": true,
+    "ledger_small_cash/equal_weight": true,
+    "ledger_small_cash/intraday_reversal_20": true,
+    "ledger_small_cash/low_amount_20": true,
+    "ledger_small_cash/low_vol_60": true,
+    "ledger_small_cash/reversal_5": true,
+    "ledger_small_cash/reversal_low_vol60": true
+  },
+  "ledger_errors": [
+    {
+      "run": "base/equal_weight",
+      "relative_cash_reconstruction_error": 2.2995233535766602e-10,
+      "max_fee_relative_error": 5.999882036681552e-10,
+      "max_daily_return_error": 5.342948306008566e-16
+    },
+    {
+      "run": "base/intraday_reversal_20",
+      "relative_cash_reconstruction_error": 3.9046037197113036e-10,
+      "max_fee_relative_error": 5.987898288952827e-10,
+      "max_daily_return_error": 3.894454203567932e-16
+    },
+    {
+      "run": "base/low_amount_20",
+      "relative_cash_reconstruction_error": 9.441852569580078e-12,
+      "max_fee_relative_error": 5.955863609551616e-10,
+      "max_daily_return_error": 4.597017211338539e-16
+    },
+    {
+      "run": "base/low_vol_60",
+      "relative_cash_reconstruction_error": 5.4445505142211915e-11,
+      "max_fee_relative_error": 5.980769476197513e-10,
+      "max_daily_return_error": 4.440892098500626e-16
+    },
+    {
+      "run": "base/reversal_5",
+      "relative_cash_reconstruction_error": 8.119317293167114e-10,
+      "max_fee_relative_error": 5.967446517905168e-10,
+      "max_daily_return_error": 3.191891195797325e-16
+    },
+    {
+      "run": "base/reversal_low_vol60",
+      "relative_cash_reconstruction_error": 4.5225036144256594e-10,
+      "max_fee_relative_error": 5.977965821167273e-10,
+      "max_daily_return_error": 4.85722573273506e-16
+    },
+    {
+      "run": "cost_stress/equal_weight",
+      "relative_cash_reconstruction_error": 3.5738348960876465e-11,
+      "max_fee_relative_error": 7.995522467334387e-10,
+      "max_daily_return_error": 3.122502256758253e-16
+    },
+    {
+      "run": "cost_stress/intraday_reversal_20",
+      "relative_cash_reconstruction_error": 3.85738730430603e-10,
+      "max_fee_relative_error": 7.898279102003687e-10,
+      "max_daily_return_error": 3.95516952522712e-16
+    },
+    {
+      "run": "cost_stress/low_amount_20",
+      "relative_cash_reconstruction_error": 8.862495422363282e-12,
+      "max_fee_relative_error": 7.259789162771973e-10,
+      "max_daily_return_error": 3.972516759986888e-16
+    },
+    {
+      "run": "cost_stress/low_vol_60",
+      "relative_cash_reconstruction_error": 9.931559860706329e-11,
+      "max_fee_relative_error": 6.495233677710544e-10,
+      "max_daily_return_error": 3.215743643592006e-16
+    },
+    {
+      "run": "cost_stress/reversal_5",
+      "relative_cash_reconstruction_error": 4.712915420532226e-10,
+      "max_fee_relative_error": 7.934290834525426e-10,
+      "max_daily_return_error": 3.3219954564955856e-16
+    },
+    {
+      "run": "cost_stress/reversal_low_vol60",
+      "relative_cash_reconstruction_error": 1.8851828575134278e-10,
+      "max_fee_relative_error": 7.052352470615302e-10,
+      "max_daily_return_error": 4.3194614551822497e-16
+    },
+    {
+      "run": "small_cash/equal_weight",
+      "relative_cash_reconstruction_error": 2.2995250765234231e-10,
+      "max_fee_relative_error": 6.000003271999788e-11,
+      "max_daily_return_error": 3.0704605524789486e-16
+    },
+    {
+      "run": "small_cash/intraday_reversal_20",
+      "relative_cash_reconstruction_error": 2.7535394474398345e-10,
+      "max_fee_relative_error": 5.965935211612092e-10,
+      "max_daily_return_error": 3.157196726277789e-16
+    },
+    {
+      "run": "small_cash/low_amount_20",
+      "relative_cash_reconstruction_error": 1.8354121129959823e-10,
+      "max_fee_relative_error": 5.963342610037686e-10,
+      "max_daily_return_error": 4.649058915617843e-16
+    },
+    {
+      "run": "small_cash/low_vol_60",
+      "relative_cash_reconstruction_error": 1.3221317203715444e-10,
+      "max_fee_relative_error": 5.848442345394163e-10,
+      "max_daily_return_error": 3.2130331381607924e-16
+    },
+    {
+      "run": "small_cash/reversal_5",
+      "relative_cash_reconstruction_error": 4.696751711890102e-10,
+      "max_fee_relative_error": 5.990902340059281e-10,
+      "max_daily_return_error": 3.5822039778921066e-16
+    },
+    {
+      "run": "small_cash/reversal_low_vol60",
+      "relative_cash_reconstruction_error": 1.1212649988010526e-09,
+      "max_fee_relative_error": 5.939088982467383e-10,
+      "max_daily_return_error": 5.178149575790769e-16
+    }
+  ],
+  "precision_note": "Compressed order amounts use 10 significant digits; cash comparison tolerance is 1e-7 of initial cash",
+  "passed": true,
+  "reference_cross_checks": {
+    "BY_vs_statsmodels_max_absolute_error": 2.7755575615628914e-17,
+    "HAC_vs_statsmodels_max_absolute_error": 2.7755575615628914e-17,
+    "scope": "validation primary horizon; reference package is optional and not a runtime dependency"
+  }
+}

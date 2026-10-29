@@ -1,0 +1,14 @@
+{
+  "factor": "reversal_5",
+  "formula": null,
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "5 日反转",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

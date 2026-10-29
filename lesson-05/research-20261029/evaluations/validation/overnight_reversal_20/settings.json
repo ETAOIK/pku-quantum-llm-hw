@@ -1,0 +1,14 @@
+{
+  "factor": "overnight_reversal_20",
+  "formula": "-ts_mean(open / lag(close, 1) - 1, 20)",
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "20日隔夜反转",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

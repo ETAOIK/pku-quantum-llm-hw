@@ -1,0 +1,14 @@
+{
+  "factor": "intraday_reversal_5",
+  "formula": "-ts_mean(close / open - 1, 5)",
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "5日日内反转",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

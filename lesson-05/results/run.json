@@ -1,0 +1,53 @@
+{
+  "created_at": "2026-10-23T20:10:47+08:00",
+  "python": "3.12.2",
+  "numpy": "1.26.4",
+  "pandas": "2.2.2",
+  "source_sha256": "5766950f2a105244867b842709cf4bad890e4e11df0eebeeaa4fec42dc05803d",
+  "status_sha256": "a139741264dbca6d3ddbbae5343cb0bd9d6ac943ff5a71416e353a49735f151b",
+  "universe_config": {
+    "version": "issue-8-20261023",
+    "frozen_on": "2026-10-23 Asia/Shanghai; retrospective revision",
+    "test": [
+      "2025-01-02",
+      "2026-09-30"
+    ],
+    "initial_cash": 1000000000.0,
+    "top_n": 50,
+    "rebalance_every": 5,
+    "invested_fraction": 0.95,
+    "min_history": 120,
+    "min_price": 2.0,
+    "min_amount_20": 20000000.0,
+    "participation": 0.1,
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0,
+    "sell_tax_bps_before_20230828": 10.0,
+    "sell_tax_bps_from_20230828": 5.0,
+    "open_gap_guard": 0.048,
+    "stale_write_down_days": 100000,
+    "fill_feasibility": "a daily zero-amount bar is treated as having no executable opening; daily amount is only an ex-post suspension proxy, never a sizing input",
+    "selection": "reuse low_vol_60 selected by the original 2023-2024 validation; no assignment-period re-selection",
+    "accounting": "fractional adjusted units at raw_price * cumadj; synthetic total-return research assumption, not raw-share corporate-action ledger",
+    "liquidation_days": 20
+  },
+  "mode": "retrospective-exploration",
+  "checks": {
+    "source_unchanged": true,
+    "constant_ic_undefined": true,
+    "constant_groups_not_fabricated": true,
+    "opposite_direction_ic": true,
+    "all_candidates_saved": true
+  },
+  "code_sha256": {
+    "lesson-05/run.py": "33703079ba2cdea0f91ccc6cc4e7f36f1e05d853c71c4320e58dd52d140ba61b",
+    "lesson-05/shared.py": "a21242fa0e7cc41be7cde75c537f3a597ecc6486b4ea404418020bd18bcfb9ea",
+    "lesson-05/factor.py": "025825a4f69c09fa9d063c2fe16cb1b8b8c4f4566a327ce8324a127f9a470005",
+    "lesson-05/app.py": "6681ce6d03e9c55e5df8097a8cbcd721ea6351269821c7fe57c48cb32ed16e6d",
+    "lesson-04/data.py": "5107e68daf4a22c56e5a319b6bf1e2593f50db1bc7011c1f8fcdc513fa83ef83",
+    "lesson-04/signals.py": "7a0febf800623ac4ed295119f5e261ff80db36ef41aeb4e59e2f8accbaeba7fa",
+    "lesson-04/formula.py": "d5f2b62328c7211b3fe22f23c8f241d53ff2554fcc745b09d49844211613cb1e",
+    "lesson-04/engine.py": "60aa3830da4730eda890bcffaeef5592bbe1e331102ea519fcdc821456b6ba6e",
+    "lesson-04/course.py": "2dee0522182c5d083f7b1f637e03d7ae7deeccb25cf3a1293cd99c994032f93f"
+  }
+}

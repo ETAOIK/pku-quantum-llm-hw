@@ -1,0 +1,14 @@
+{
+  "factor": "low_trade_size_20",
+  "formula": null,
+  "stage": "development",
+  "start": "2025-01-02",
+  "end": "2025-06-30",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "低平均每笔金额",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

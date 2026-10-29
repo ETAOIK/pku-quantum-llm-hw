@@ -1,0 +1,4 @@
+runtime/
+__pycache__/
+research-20261029/backtests/*/equal_weight/orders.csv.gz
+research-20261029/backtests/*/equal_weight/holdings.csv.gz

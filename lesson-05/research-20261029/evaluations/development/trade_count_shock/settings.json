@@ -1,0 +1,14 @@
+{
+  "factor": "trade_count_shock",
+  "formula": "-ts_mean(num_trades, 5) / ts_mean(num_trades, 20)",
+  "stage": "development",
+  "start": "2025-01-02",
+  "end": "2025-06-30",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "近期成交笔数收缩",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

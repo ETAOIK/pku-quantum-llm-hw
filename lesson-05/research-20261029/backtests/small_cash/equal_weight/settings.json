@@ -1,0 +1,30 @@
+{
+  "config": {
+    "version": "issue-8-20261023",
+    "frozen_on": "2026-10-23 Asia/Shanghai; retrospective revision",
+    "test": [
+      "2026-01-01",
+      "2026-09-30"
+    ],
+    "initial_cash": 1000000.0,
+    "top_n": 50,
+    "rebalance_every": 5,
+    "invested_fraction": 0.95,
+    "min_history": 120,
+    "min_price": 2.0,
+    "min_amount_20": 20000000.0,
+    "participation": 0.1,
+    "commission_bps": 1.0,
+    "slippage_bps": 5.0,
+    "sell_tax_bps_before_20230828": 10.0,
+    "sell_tax_bps_from_20230828": 5.0,
+    "open_gap_guard": 0.048,
+    "stale_write_down_days": 100000,
+    "fill_feasibility": "a daily zero-amount bar is treated as having no executable opening; daily amount is only an ex-post suspension proxy, never a sizing input",
+    "selection": "reuse low_vol_60 selected by the original 2023-2024 validation; no assignment-period re-selection",
+    "accounting": "fractional adjusted units at raw_price * cumadj; synthetic total-return research assumption, not raw-share corporate-action ledger",
+    "liquidation_days": 20
+  },
+  "factor": "equal_weight",
+  "conversions": []
+}

@@ -1,0 +1,14 @@
+{
+  "factor": "amount_shock_reversal",
+  "formula": "-returns(close, 5) * ts_mean(amount, 5) / ts_mean(amount, 20)",
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "量能放大的5日反转",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

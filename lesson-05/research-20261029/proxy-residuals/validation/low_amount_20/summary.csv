@@ -1,0 +1,4 @@
+horizon,signal_days,mature_days,ic_days,pearson_ic_mean,rank_ic_mean,rank_ic_std,rank_icir,rank_ic_positive_fraction,rank_ic_ci_low,rank_ic_ci_high,factor_coverage,label_coverage,paired_samples,missing_labels,group_valid_days,spread_mean,quantile_monotonicity,top_turnover,bottom_turnover,rank_autocorrelation,diagnosis
+1,126,124,0,,,,,,,,0,,0,0,0,,,,,,不可评价：截面常数或配对样本不足
+5,126,120,0,,,,,,,,0,,0,0,0,,,,,,不可评价：截面常数或配对样本不足
+20,126,105,0,,,,,,,,0,,0,0,0,,,,,,不可评价：截面常数或配对样本不足

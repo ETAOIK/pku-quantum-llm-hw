@@ -1,0 +1,14 @@
+{
+  "factor": "reversal_low_vol60",
+  "formula": "rank(-returns(close, 5)) + rank(-ts_std(returns(close, 1), 60))",
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "反转+60日低波动",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}

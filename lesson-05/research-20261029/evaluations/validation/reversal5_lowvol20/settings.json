@@ -1,0 +1,14 @@
+{
+  "factor": "reversal5_lowvol20",
+  "formula": null,
+  "stage": "validation",
+  "start": "2025-07-01",
+  "end": "2025-12-31",
+  "mode": "retrospective chronological research; all historical intervals were previously accessible and viewed",
+  "name": "反转 + 低波动",
+  "horizons": [
+    1,
+    5,
+    20
+  ]
+}
