@@ -52,7 +52,10 @@ def main():
     def save(fig, name):
         fig.tight_layout(pad=1.6)
         for suffix in ("png", "svg"):
-            fig.savefig(figures / f"{name}.{suffix}", dpi=300, bbox_inches="tight", facecolor="white")
+            path = figures / f"{name}.{suffix}"
+            fig.savefig(path, dpi=300, bbox_inches="tight", facecolor="white")
+            if suffix == "svg":
+                path.write_text("\n".join(line.rstrip() for line in path.read_text().splitlines()) + "\n")
         plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(12, 5))
