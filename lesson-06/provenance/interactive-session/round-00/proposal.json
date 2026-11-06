@@ -1,0 +1,73 @@
+{
+  "agent": "Codex current session; LLM-authored proposals through tool calls; no separate model API",
+  "candidates": [
+    {
+      "change": "初始种群：固定50只、5日调仓，先隔离因子差异；采用已有简单基线作为祖先。",
+      "condition": "True",
+      "formula": "-ts_std(returns(close, 1), 60)",
+      "hypothesis": "较稳定的收益序列可能减少回撤，但既有作业提示正IC不一定转成正超额。",
+      "id": "g0_lowvol60",
+      "name": "60日低波动",
+      "parents": [],
+      "rebalance_every": 5,
+      "top_n": 50
+    },
+    {
+      "change": "初始种群：固定50只、5日调仓，先隔离因子差异；采用已有简单基线作为祖先。",
+      "condition": "True",
+      "formula": "-returns(close, 5)",
+      "hypothesis": "短期价格过度反应可能回补；频繁换手与大资金执行会侵蚀收益。",
+      "id": "g0_reversal5",
+      "name": "5日反转",
+      "parents": [],
+      "rebalance_every": 5,
+      "top_n": 50
+    },
+    {
+      "change": "初始种群：固定50只、5日调仓，先隔离因子差异；采用已有简单基线作为祖先。",
+      "condition": "True",
+      "formula": "-ts_mean(amount, 20)",
+      "hypothesis": "检验低成交额溢价；明确保留十亿元容量不足这一潜在失败原因。",
+      "id": "g0_lowamount20",
+      "name": "20日低成交额",
+      "parents": [],
+      "rebalance_every": 5,
+      "top_n": 50
+    },
+    {
+      "change": "初始种群：固定50只、5日调仓，先隔离因子差异；采用已有简单基线作为祖先。",
+      "condition": "True",
+      "formula": "rank(-returns(close, 5)) + rank(-ts_std(returns(close, 1), 60))",
+      "hypothesis": "把短期反转与防御排序相加，检验能否改善单一反转回撤；可能只是重复既有暴露。",
+      "id": "g0_rev_lowvol",
+      "name": "反转与低波动等权排名",
+      "parents": [],
+      "rebalance_every": 5,
+      "top_n": 50
+    },
+    {
+      "change": "初始种群：固定50只、5日调仓，先隔离因子差异；采用已有简单基线作为祖先。",
+      "condition": "True",
+      "formula": "-ts_mean(close / open - 1, 20)",
+      "hypothesis": "日内弱势与隔夜变动分开；平滑的日内反转可能降低噪声。",
+      "id": "g0_intraday20",
+      "name": "20日日内反转",
+      "parents": [],
+      "rebalance_every": 5,
+      "top_n": 50
+    },
+    {
+      "change": "初始种群：固定50只、5日调仓，先隔离因子差异；采用已有简单基线作为祖先。",
+      "condition": "True",
+      "formula": "returns(close, 60)",
+      "hypothesis": "保留方向不同的趋势种群，检验只看反转是否遗漏持续性；不能事后翻转方向。",
+      "id": "g0_momentum60",
+      "name": "60日动量",
+      "parents": [],
+      "rebalance_every": 5,
+      "top_n": 50
+    }
+  ],
+  "context_sha256": "86920e5c8f628761be3b5534f657b1957799b6b7655e413fbe7925f5053c158f",
+  "generation": 0
+}

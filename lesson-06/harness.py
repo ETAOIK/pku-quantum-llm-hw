@@ -1,0 +1,410 @@
+"""Bounded agent/tool loop, with JSON proposals, feedback, lineage and frozen evaluation."""
+import argparse
+import ast
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from datetime import datetime
+from pathlib import Path
+from zoneinfo import ZoneInfo
+
+import numpy as np
+import pandas as pd
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent / "lesson-05"))
+from shared import FOURTH, evaluate, load_context, sha256, validate_expression
+from factor import DEFAULTS, analyze, save_result
+from course import read_state, simulate
+from engine import metrics
+from mining import block_excess
+
+
+def clean(value):
+    if isinstance(value, dict):
+        return {k: clean(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [clean(v) for v in value]
+    if isinstance(value, np.generic):
+        value = value.item()
+    if isinstance(value, float) and not np.isfinite(value):
+        return None
+    return value
+
+
+def encoded(value):
+    return json.dumps(clean(value), ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+
+
+def digest(value):
+    return hashlib.sha256(encoded(value).encode()).hexdigest()
+
+
+def write(path, value):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(encoded(value))
+
+
+def read(path):
+    return json.loads(Path(path).read_text())
+
+
+def now():
+    return datetime.now(ZoneInfo("Asia/Shanghai")).isoformat()
+
+
+def identity(candidate):
+    return (ast.dump(validate_expression(candidate["formula"])),
+            ast.dump(validate_expression(candidate["condition"])),
+            candidate["top_n"], candidate["rebalance_every"])
+
+
+def validate_batch(proposal, context):
+    """The agent controls hypotheses, never dates, capital, costs or evaluation gates."""
+    if set(proposal) != {"generation", "context_sha256", "agent", "candidates"}:
+        raise ValueError("Proposal fields must match the contract exactly")
+    if context["phase"] != "evolving":
+        raise ValueError("Run is frozen; further proposals are forbidden")
+    if proposal.get("context_sha256") != digest(context):
+        raise ValueError("Stale or missing feedback/context digest")
+    if type(proposal.get("generation")) is not int or proposal["generation"] != context["next_generation"]:
+        raise ValueError("Wrong generation")
+    if proposal["generation"] >= context["protocol"]["generations"]:
+        raise ValueError("Generation budget exhausted")
+    if not isinstance(proposal.get("agent"), str) or not proposal["agent"].strip():
+        raise ValueError("Agent provenance is required")
+    batch = proposal.get("candidates")
+    if not isinstance(batch, list) or len(batch) != context["protocol"]["batch_size"]:
+        raise ValueError("Submit exactly one bounded batch")
+    history = {c["id"]: c for c in context["history"]}
+    seen = {identity(c) for c in history.values()}
+    ids = set(history)
+    required = {"id", "name", "formula", "condition", "top_n", "rebalance_every", "parents", "hypothesis", "change"}
+    for c in batch:
+        if not isinstance(c, dict) or set(c) != required:
+            raise ValueError("Candidate fields must match the contract exactly")
+        if (not isinstance(c["id"], str) or not re.fullmatch(r"[a-z][a-z0-9_]{1,47}", c["id"]) or c["id"] in ids
+                or c["id"] == "equal_weight" or c["id"].startswith("baseline_")):
+            raise ValueError("Unique lowercase candidate id required")
+        for key in ("name", "hypothesis", "change"):
+            if not isinstance(c[key], str) or not 1 <= len(c[key]) <= 2000:
+                raise ValueError(f"Missing or oversized {key}")
+        parents = c["parents"]
+        if (not isinstance(parents, list) or len(parents) > 2 or any(not isinstance(p, str) for p in parents) or len(set(parents)) != len(parents)
+                or any(p not in history for p in parents) or (proposal["generation"] > 0 and not parents)):
+            raise ValueError("Children require one or two evaluated parents from earlier generations")
+        if proposal["generation"] == 0 and parents:
+            raise ValueError("Founders have no parents")
+        for key in ("top_n", "rebalance_every"):
+            if type(c[key]) is not int or c[key] not in context["protocol"]["strategy_space"][key]:
+                raise ValueError(f"{key} outside frozen search space")
+        key = identity(c)
+        if key in seen:
+            raise ValueError("Duplicate formula/condition/strategy")
+        seen.add(key)
+        ids.add(c["id"])
+    return batch
+
+
+def aggregate(folds, nodes):
+    objective = min(f["annual_excess"] for f in folds) - .25 * max(abs(f["max_drawdown"]) for f in folds) - .0001 * nodes
+    return float(objective)
+
+
+def gate(folds, rules):
+    return all(all(f[k] is not None and np.isfinite(f[k]) and f[k] > threshold for k, threshold in (
+        ("rank_ic_mean", rules["min_rank_ic"]), ("spread_mean", rules["min_spread"]), ("annual_excess", rules["min_excess"])))
+        and all(f[k] is not None and f[k] >= rules[threshold] for k, threshold in (
+            ("factor_coverage", "min_factor_coverage"), ("label_coverage", "min_label_coverage"), ("pool_coverage", "min_pool_coverage"))) for f in folds)
+
+
+def ranked(history):
+    return sorted(history, key=lambda c: (not c["development_pass"], -c["objective"], c["id"]))
+
+
+def init_run(output, protocol_path, data, status):
+    if (output / "state.json").exists():
+        raise ValueError("Run already exists; resume it or use a new output directory")
+    protocol = read(protocol_path)
+    write(output / "protocol.json", protocol)
+    write(output / "manifest.json", {"created_at": now(), "data_sha256": sha256(data), "status_sha256": sha256(status),
+          "protocol_sha256": digest(protocol), "source_sha256": {str(p.relative_to(HERE.parent)): sha256(p)
+              for p in [HERE / "harness.py", FOURTH / "formula.py", FOURTH / "data.py", FOURTH / "course.py",
+                        FOURTH / "engine.py", FOURTH / "assignment/protocol.json", FOURTH / "results/data_audit.json",
+                        HERE.parent / "lesson-05/factor.py", HERE.parent / "lesson-05/protocol.json",
+                        HERE.parent / "lesson-05/mining.py", HERE.parent / "lesson-05/shared.py"]}})
+    write(output / "state.json", {"phase": "evolving", "next_generation": 0, "history": []})
+
+
+def context_for(output):
+    state = read(output / "state.json")
+    return {**state, "protocol": read(output / "protocol.json"),
+            "task": "Propose a factor and strategy batch based only on the supplied development feedback. Return one JSON object, no Markdown. Do not request validation/followup data.",
+            "candidate_fields": {"id": "unique lowercase identifier", "name": "Chinese display name", "formula": "safe historical expression",
+                "condition": "safe boolean expression or True", "top_n": "allowed integer", "rebalance_every": "allowed integer",
+                "parents": "0 founders; 1-2 prior evaluated ids otherwise", "hypothesis": "economic hypothesis and risks", "change": "feedback-driven change vs parents"},
+            "expression_language": {"fields": ["close", "open", "high", "low", "amount", "num_trades"],
+                "functions": ["rank(x)", "abs(x)", "where(condition,x,y)", "lag(x,n)", "returns(x,n)", "ts_mean(x,n)", "ts_std(x,n)", "ts_min(x,n)", "ts_max(x,n)"],
+                "notes": "close/open/high/low are adjusted; rank uses same-day base universe; n is 1..252; max 600 chars/100 AST nodes each; no arbitrary code"},
+            "response_fields": ["generation", "context_sha256", "agent", "candidates"]}
+
+
+def slice_context(panels, market, end):
+    mask = market["dates"] <= pd.Timestamp(end)
+    count = int(mask.sum())
+    p = {k: v.iloc[:count] if isinstance(v, pd.DataFrame) else v for k, v in panels.items()}
+    m = {k: v[:count] if isinstance(v, (pd.DataFrame, np.ndarray)) else v for k, v in market.items()}
+    m["dates"] = market["dates"][:count]
+    return p, m
+
+
+class Tools:
+    def __init__(self, output, data, status):
+        manifest = read(output / "manifest.json")
+        if sha256(data) != manifest["data_sha256"] or sha256(status) != manifest["status_sha256"]:
+            raise ValueError("Input changed since initialization")
+        for name, fingerprint in manifest["source_sha256"].items():
+            if sha256(HERE.parent / name) != fingerprint:
+                raise ValueError(f"Source changed since initialization: {name}; use a new run")
+        self.protocol = read(output / "protocol.json")
+        if digest(self.protocol) != manifest["protocol_sha256"]:
+            raise ValueError("Protocol changed since initialization")
+        self.panels, self.market, self.config = load_context(data, status)
+        self.state = read_state(status, self.market["dates"], self.market["symbols"])
+        self.baselines = {}
+
+    def run(self, candidate, period, scenario="base", output=None, diagnostics=True):
+        panels, market = slice_context(self.panels, self.market, period[1])
+        broad = candidate["id"] == "equal_weight"
+        score = np.zeros(market["eligible"].shape, dtype=np.float32) if broad else evaluate(candidate["formula"], panels, market)
+        condition = evaluate(candidate["condition"], panels, market, condition=True)
+        selected_market = {**market, "eligible": market["eligible"] & condition}
+        factor = {}
+        if diagnostics and not broad:
+            settings = {**DEFAULTS, "start": period[0], "end": period[1], "horizons": [self.protocol["horizon"]]}
+            result = analyze(score, selected_market, settings)
+            factor = result["summary"].iloc[0].to_dict()
+            mask = (market["dates"] >= period[0]) & (market["dates"] <= period[1])
+            factor["pool_coverage"] = float(selected_market["eligible"][mask].sum() / max(1, market["eligible"][mask].sum()))
+            if output:
+                save_result(output / "factor", result, {"candidate": candidate, "period": period})
+        config = {**self.config, **self.protocol["account"], "test": period, "top_n": candidate["top_n"], "rebalance_every": candidate["rebalance_every"]}
+        if scenario == "cost_stress":
+            config["commission_bps"] *= 2
+            config["slippage_bps"] *= 2
+        elif scenario == "small_cash":
+            config["initial_cash"] = 1e6
+        daily, orders, holdings, conversions = simulate(selected_market, score, self.state[:len(market["dates"])], config, panels["cumadj"], broad=broad)
+        if orders.empty:
+            orders = pd.DataFrame(columns=["date", "signal_date", "symbol", "side", "requested_reference_notional", "filled_reference_notional",
+                                           "adjusted_units", "notional", "fee", "is_st", "status"])
+        if holdings.empty:
+            holdings = pd.DataFrame(columns=["date", "symbol", "adjusted_units", "mark", "value", "stale_days"])
+        result = metrics(daily, config["initial_cash"])
+        requested = orders.requested_reference_notional.sum() if len(orders) else 0
+        result.update(factor, terminal_positions=int(daily.holdings.iloc[-1]), terminal_cash=float(daily.cash.iloc[-1]),
+                      fill_fraction=float(orders.filled_reference_notional.sum() / requested) if requested else 0.,
+                      annual_net_return=float(daily["return"].mean() * 252))
+        # Fresh, matched-capital account; the benchmark always keeps the fixed 5-day schedule.
+        key = (tuple(period), scenario)
+        if broad:
+            self.baselines[key] = daily
+        elif key not in self.baselines:
+            self.run(benchmark(), period, scenario, diagnostics=False)
+        baseline = self.baselines[key]
+        if not daily.index.equals(baseline.index):
+            raise AssertionError("Unaligned benchmark")
+        result["annual_excess"] = float((daily["return"] - baseline["return"]).mean() * 252)
+        result["total_excess_pp"] = float((daily.equity.iloc[-1] / config["initial_cash"] - baseline.equity.iloc[-1] / config["initial_cash"]) * 100)
+        result["checks"] = {"signal_precedes_order": bool((orders.signal_date < orders.date).all()) if len(orders) else True,
+                            "no_st_buys": not bool(((orders.side == "BUY") & (orders.is_st == 1) & (orders.notional > 0)).any()) if len(orders) else True,
+                            "nonnegative_cash": bool(daily.cash.min() >= -1e-6),
+                            "cash_plus_holdings": bool(np.allclose(holdings.groupby("date").value.sum().reindex(daily.index, fill_value=0).loc[holdings.date.unique()] + daily.cash.loc[holdings.date.unique()], daily.equity.loc[holdings.date.unique()], rtol=1e-10, atol=.001)) if len(holdings) else bool(np.allclose(daily.cash, daily.equity))}
+        if not all(result["checks"].values()):
+            raise AssertionError(result["checks"])
+        if output:
+            output.mkdir(parents=True, exist_ok=True)
+            daily.to_csv(output / "daily.csv", index_label="date")
+            orders.to_csv(output / "orders.csv.gz", index=False, float_format="%.12g")
+            holdings.to_csv(output / "holdings.csv.gz", index=False, float_format="%.12g")
+            write(output / "settings.json", {"candidate": candidate, "config": config, "conversions": conversions})
+            write(output / "metrics.json", result)
+        return result, daily
+
+
+def benchmark():
+    return {"id": "equal_weight", "formula": "0", "condition": "True", "top_n": 50, "rebalance_every": 5}
+
+
+def fixed_controls(history):
+    """Fixed comparisons must not depend on the external agent's founder identifiers."""
+    controls = {}
+    for name, formula in (("lowvol60", "-ts_std(returns(close, 1), 60)"),
+                          ("reversal5", "-returns(close, 5)"), ("lowamount20", "-ts_mean(amount, 20)")):
+        candidate = {**benchmark(), "id": "baseline_" + name, "formula": formula}
+        same = next((c for c in history if identity(c) == identity(candidate)), candidate)
+        controls[same["id"]] = same
+    return controls
+
+
+def evaluate_batch(output, proposal, data, status):
+    context = context_for(output)
+    batch = validate_batch(proposal, context)
+    generation = context["next_generation"]
+    folder = output / f"round-{generation:02d}"
+    if (folder / "proposal.json").exists() and read(folder / "proposal.json") != proposal:
+        raise ValueError("Partial generation belongs to a different proposal")
+    write(folder / "context.json", {**context, "context_sha256": digest(context)})
+    write(folder / "proposal.json", proposal)
+    tools = Tools(output, data, status)
+    history = list(context["history"])
+    for candidate in batch:
+        records = []
+        for fold, period in context["protocol"]["development"].items():
+            target = folder / candidate["id"] / fold
+            print(f"generation={generation} candidate={candidate['id']} development={fold}", flush=True)
+            if (target / "metrics.json").exists():
+                result = read(target / "metrics.json")
+            else:
+                # Only summaries/daily returns are stored for development, not repeated order books.
+                result, daily = tools.run(candidate, period)
+                target.mkdir(parents=True, exist_ok=True)
+                daily.to_csv(target / "daily.csv", index_label="date")
+                write(target / "metrics.json", result)
+            records.append({**result, "fold": fold})
+        nodes = sum(len(list(ast.walk(validate_expression(candidate[k])))) for k in ("formula", "condition"))
+        objective = aggregate(records, nodes)
+        passed = gate(records, context["protocol"]["gate"])
+        parent_scores = [c["objective"] for c in history if c["id"] in candidate["parents"]]
+        item = {**candidate, "generation": generation, "ast_nodes": nodes, "objective": objective,
+                "development_pass": passed, "parent_improvement": objective - max(parent_scores) if parent_scores else None,
+                "decision": "founder" if not parent_scores else "promoted" if passed and objective > max(parent_scores) else "not_promoted", "folds": records}
+        history.append(clean(item))
+    leaderboard = ranked(history)
+    feedback = {"generation": generation, "agent": proposal["agent"], "context_sha256": digest(context), "completed_at": now(),
+                "leaderboard": leaderboard, "development_leader": leaderboard[0]["id"],
+                "qualified_count": sum(c["development_pass"] for c in history),
+                "next_action": "freeze" if generation + 1 == context["protocol"]["generations"] else "propose children using development feedback only"}
+    write(folder / "feedback.json", feedback)
+    write(output / "state.json", {"phase": "evolving", "next_generation": generation + 1, "history": history})
+    pd.DataFrame([{k: v for k, v in c.items() if k != "folds"} for c in history]).to_csv(output / "lineage.csv", index=False)
+    print(encoded({"feedback": str(folder / "feedback.json"), "leader": feedback["development_leader"], "qualified": feedback["qualified_count"]}))
+
+
+def freeze(output):
+    state = read(output / "state.json")
+    protocol = read(output / "protocol.json")
+    if state["phase"] != "evolving" or state["next_generation"] != protocol["generations"]:
+        raise ValueError("Complete exactly the generation budget before freezing")
+    leaders = ranked(state["history"])
+    shortlist = [c["id"] for c in leaders[:protocol["shortlist_size"]]]
+    champions = [ranked([c for c in state["history"] if c["generation"] == g])[0]["id"] for g in range(protocol["generations"])]
+    write(output / "freeze.json", {"frozen_at": now(), "history_sha256": digest(state["history"]), "shortlist": shortlist,
+                                 "generation_champions": champions, "mode": protocol["mode"]})
+    write(output / "state.json", {**state, "phase": "frozen"})
+
+
+def finalize(output, data, status):
+    state, frozen = read(output / "state.json"), read(output / "freeze.json")
+    if state["phase"] not in ("frozen", "selected") or digest(state["history"]) != frozen["history_sha256"]:
+        raise ValueError("History must match frozen selection; completed runs cannot be overwritten")
+    tools = Tools(output, data, status)
+    protocol = tools.protocol
+    candidates = {c["id"]: c for c in state["history"]}
+    validation = []
+    if state["phase"] == "frozen":
+        for name in frozen["shortlist"]:
+            print("validation", name, flush=True)
+            result, _ = tools.run(candidates[name], protocol["validation"], output=output / "validation" / name)
+            validation.append({"id": name, **result, "validation_objective": aggregate([result], candidates[name]["ast_nodes"]),
+                               "qualified": candidates[name]["development_pass"] and gate([result], protocol["gate"])})
+        ordered = sorted(validation, key=lambda x: (not x["qualified"], -x["validation_objective"], x["id"]))
+        qualified = [c["id"] for c in ordered if c["qualified"]]
+        selection = {"selected_at": now(), "qualified_candidate": qualified[0] if qualified else None,
+                     "diagnostic_leader": ordered[0]["id"], "validation": validation, "followup_used_for_selection": False,
+                     "freeze_sha256": sha256(output / "freeze.json"), "mode": protocol["mode"]}
+        write(output / "selection.json", selection)
+        write(output / "state.json", {**state, "phase": "selected"})
+    selection = read(output / "selection.json")
+    controls = fixed_controls(state["history"])
+    candidates.update(controls)
+    fixed = list(controls)
+    names = list(dict.fromkeys(["equal_weight", *fixed, *frozen["generation_champions"], selection["diagnostic_leader"]]))
+    results = []
+    for scenario in ("base", "cost_stress", "small_cash"):
+        for name in names:
+            print("followup", scenario, name, flush=True)
+            result, daily = tools.run(benchmark() if name == "equal_weight" else candidates[name], protocol["followup"], scenario,
+                                      output / "backtests" / scenario / name)
+            base = tools.baselines[(tuple(protocol["followup"]), scenario)]
+            result.update(block_excess(daily["return"], base["return"], **protocol["bootstrap"]))
+            results.append({"scenario": scenario, "id": name, **result})
+    pd.DataFrame([{k: v for k, v in row.items() if k != "checks"} for row in results]).to_csv(output / "followup.csv", index=False)
+    write(output / "summary.json", {"completed_at": now(), "selection": selection, "followup": results,
+                                   "checks": {"all_accounting_checks": all(all(r["checks"].values()) for r in results),
+                                              "frozen_history_unchanged": digest(state["history"]) == frozen["history_sha256"]}})
+    write(output / "state.json", {**state, "phase": "complete"})
+
+
+def run_agent(command, context):
+    # The caller explicitly chooses a trusted executable; never execute proposal text.
+    request = {**context, "context_sha256": digest(context)}
+    completed = subprocess.run(command, input=encoded(request), text=True, capture_output=True, timeout=600, check=True)
+    return json.loads(completed.stdout)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("action", choices=["init", "context", "evaluate", "freeze", "finalize", "auto", "replay"])
+    parser.add_argument("--output", type=Path, default=HERE / "results")
+    parser.add_argument("--data", type=Path, default=FOURTH / "data/feathers.zip")
+    parser.add_argument("--status", type=Path, default=FOURTH / "data/status.parquet")
+    parser.add_argument("--protocol", type=Path, default=HERE / "protocol.json")
+    parser.add_argument("--proposal", type=Path)
+    parser.add_argument("--proposals", type=Path, default=HERE / "proposals")
+    parser.add_argument("--agent-command", help='JSON argv array; context on stdin, proposal JSON on stdout; no shell')
+    args = parser.parse_args()
+    output = args.output
+    if args.action == "init":
+        init_run(output, args.protocol, args.data, args.status)
+    elif args.action == "context":
+        context = context_for(output)
+        print(encoded({**context, "context_sha256": digest(context)}))
+    elif args.action == "evaluate":
+        if not args.proposal:
+            parser.error("--proposal is required")
+        evaluate_batch(output, read(args.proposal), args.data, args.status)
+    elif args.action == "freeze":
+        freeze(output)
+    elif args.action == "finalize":
+        finalize(output, args.data, args.status)
+    else:
+        command = json.loads(args.agent_command) if args.agent_command else None
+        if args.action == "auto" and (not isinstance(command, list) or not command or any(not isinstance(x, str) for x in command)):
+            parser.error("auto requires a trusted --agent-command JSON argv array")
+        if not (output / "state.json").exists():
+            init_run(output, args.protocol, args.data, args.status)
+        while True:
+            context = context_for(output)
+            if context["phase"] != "evolving":
+                break
+            if context["next_generation"] == context["protocol"]["generations"]:
+                freeze(output)
+                break
+            if args.action == "auto":
+                proposal = run_agent(command, context)
+            else:
+                proposal = read(args.proposals / f"round-{context['next_generation']:02d}.json")
+                # Replay preserves hypotheses but binds them to this run's newly computed feedback.
+                proposal["context_sha256"] = digest(context)
+                proposal["agent"] = "replay of " + proposal["agent"]
+            evaluate_batch(output, proposal, args.data, args.status)
+        if read(output / "state.json")["phase"] != "complete":
+            finalize(output, args.data, args.status)
+
+
+if __name__ == "__main__":
+    main()

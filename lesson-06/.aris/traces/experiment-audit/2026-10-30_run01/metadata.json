@@ -1,0 +1,21 @@
+{
+  "agent_id": "/root/integrity_review",
+  "reviewer_model": "Inherited Codex model; exact model ID unavailable",
+  "reviewer_reasoning": "ultra",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "generated_at": "2026-10-30T21:43:48.191919+08:00",
+  "trace_completeness": "Saved delivered prompt, final reviewer response, audited hashes and available early failure artifact; internal reviewer tool transcript not exposed by collaboration API.",
+  "audited_input_hashes": {
+    "lesson-06/harness.py": "sha256:b07e946f598df3c8b722b2c9aa65da22b072e585ae0d0c2b842581811fa2b50c",
+    "lesson-06/verify.py": "sha256:fc4aa826dbf7fa5f47e81c36acbe8b4086e641deaf33e62cfb8a61d861be89b6",
+    "lesson-06/protocol.json": "sha256:5e8fbcad45839eecf1800c5f12031dcbe7cc6494524e6d663a29be801d865842",
+    "lesson-06/results/manifest.json": "sha256:8dab46d23c3768a6d588715b1ef292b8956b185849ec00967e6f752bf41f5b7c",
+    "lesson-06/results/state.json": "sha256:8627d409dd78e45495f75aa7ef58a5d165013464a71c3f76b5a64346968f7925",
+    "lesson-06/results/freeze.json": "sha256:5af74f3d9acd74df5a1afcacf0922d0a84455c8ba69b048915a09be06a179117",
+    "lesson-06/results/selection.json": "sha256:2233172e020b7b92383b67e228b3e9fb84ed997cc563c2c3acb686e81343a62d",
+    "lesson-06/results/summary.json": "sha256:deede988b5b7dcd8f54d3b0e105df3d448a5509117f8ffd4c8ab94c2e37d5f63",
+    "lesson-06/results/verification.json": "sha256:b46ac45b3a5a4ce070eadb67bc075f7fb5b5e46ba3c1d09d0bb14dcf665f5432",
+    "lesson-06/results/followup.csv": "sha256:9849a221bbbf7a5e41b659f33f26f4457827ef6310348565ec3ed616f3db4b5d"
+  }
+}

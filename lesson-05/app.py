@@ -184,10 +184,11 @@ def main():
     parser.add_argument("--data", type=Path, default=FOURTH / "data/feathers.zip")
     parser.add_argument("--status", type=Path, default=FOURTH / "data/status.parquet")
     parser.add_argument("--port", type=int, default=8768)
+    parser.add_argument("--agent-command", help="自主挖掘模型命令的 JSON argv 数组")
     args = parser.parse_args()
-    wb = FactorWorkbench(args.data, HERE / "runtime/backtests", status_path=args.status if args.status.exists() else None)
+    wb = FactorWorkbench(args.data, HERE / "runtime/backtests", status_path=args.status if args.status.exists() else None, agent_command=args.agent_command)
     service = FactorService(wb, HERE / "runtime/factors", HERE / "results")
-    print(f"第五课因子评价：http://127.0.0.1:{args.port}；原回测：/backtest", flush=True)
+    print(f"统一工作台：http://127.0.0.1:{args.port}；策略回测：/backtest；Agent 演化：/evolution", flush=True)
     create_app(service).run(host="127.0.0.1", port=args.port, debug=False, threaded=True)
 
 

@@ -2,6 +2,7 @@
 import argparse
 import io
 import json
+import sys
 import threading
 import time
 import uuid
@@ -77,7 +78,8 @@ def validate_request(body, defaults, dates):
 
 
 class Workbench:
-    def __init__(self, data_path, runtime, load=True, status_path=None):
+    def __init__(self, data_path, runtime, load=True, status_path=None, agent_command=None):
+        self.data_path, self.status_path, self.agent_command = data_path, status_path, agent_command
         self.defaults = json.loads((HERE / "protocol.json").read_text())
         self.audit = json.loads((HERE / "results/data_audit.json").read_text())
         self.runtime = Path(runtime)
@@ -168,11 +170,12 @@ class Workbench:
             if holdings.empty:
                 holdings = pd.DataFrame(columns=["date", "symbol", "adjusted_units", "mark", "value", "stale_days"])
             self.phase = "计算同区间、同成本等权基准"
-            benchmark_targets = make_targets(score_signal("equal_weight", self.panels, self.market), self.market, config, broad=True)
+            benchmark_config = {**config, "rebalance_every": settings.get("benchmark_rebalance_every", config["rebalance_every"])}
+            benchmark_targets = make_targets(score_signal("equal_weight", self.panels, self.market), self.market, benchmark_config, broad=True)
             if self.course_state is not None:
-                benchmark, _, _, _ = simulate(self.market, np.zeros_like(score), self.course_state, config, self.panels["cumadj"], broad=True)
+                benchmark, _, _, _ = simulate(self.market, np.zeros_like(score), self.course_state, benchmark_config, self.panels["cumadj"], broad=True)
             else:
-                benchmark, _, _ = backtest(self.market, benchmark_targets, settings["start"], settings["end"], config)
+                benchmark, _, _ = backtest(self.market, benchmark_targets, settings["start"], settings["end"], benchmark_config)
             directory = self.runtime / run_id
             directory.mkdir()
             files = {"daily": "daily.csv", "orders": "orders.csv", "holdings": "holdings.csv", "benchmark": "benchmark.csv"}
@@ -225,6 +228,7 @@ class Workbench:
                 "excess": primary["total_return"] - benchmark["total_return"],
                 "curve": records(curve), "holding_dates": sorted(holdings.date.unique().tolist(), reverse=True) if len(holdings) else [],
                 "elapsed_seconds": run.get("elapsed_seconds"),
+                "evolution_origin": run.get("evolution_origin"),
                 "terminal_positions": int(curve.holdings.iloc[-1]), "terminal_cash": float(curve.cash.iloc[-1]),
                 "benchmark_terminal_positions": int(baseline.holdings.iloc[-1]),
                 "empty_trades": not len(self.frame(run_id, "orders"))}
@@ -256,6 +260,7 @@ def create_app(workbench):
             return jsonify(ready=workbench.ready, busy=workbench.busy, phase=workbench.phase,
                            error=workbench.error, current_id=workbench.current_id, runs=runs,
                            strategies=LABELS, defaults=workbench.defaults,
+                           evolution_url=app.config.get("EVOLUTION_URL"),
                            data={"first_date": workbench.audit["first_date"], "last_date": workbench.audit["last_date"],
                                  "securities": workbench.audit["securities"], "days": workbench.audit["rows"],
                                  "sha256": workbench.audit["sha256"]})
@@ -310,6 +315,9 @@ def create_app(workbench):
     def audit():
         return jsonify(workbench.audit)
 
+    sys.path.insert(0, str(HERE.parent / "lesson-06"))
+    from evolution_web import register_evolution
+    register_evolution(app, workbench)
     return app
 
 
@@ -318,8 +326,9 @@ def main():
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--port", type=int, default=8767)
     parser.add_argument("--status", type=Path, default=HERE / "data/status.parquet")
+    parser.add_argument("--agent-command", help="模型命令 JSON argv 数组；不通过网页接受命令")
     args = parser.parse_args()
-    workbench = Workbench(args.data, HERE / "runtime", status_path=args.status if args.status.exists() else None)
+    workbench = Workbench(args.data, HERE / "runtime", status_path=args.status if args.status.exists() else None, agent_command=args.agent_command)
     print(f"本地回测工作台：http://127.0.0.1:{args.port}", flush=True)
     create_app(workbench).run(host="127.0.0.1", port=args.port, debug=False, threaded=True)
 

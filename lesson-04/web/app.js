@@ -4,7 +4,7 @@ const pct = (v, digits = 2) => `${(Number(v) * 100).toFixed(digits)}%`;
 const number = (v, digits = 2) => Number(v).toLocaleString("zh-CN", {maximumFractionDigits: digits, minimumFractionDigits: digits});
 const escapeHTML = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
 let currentRun = "original", result = null, activeTab = "orders", page = 1, pages = 1;
-let catalogLoaded = false, pendingRun = null, tableRequest = 0;
+let catalogLoaded = false, pendingRun = new URLSearchParams(window.location.search).get("run"), tableRequest = 0;
 const descriptions = {
   low_vol_60: "按过去 60 日收益波动从低到高选股。原始实验按验证期夏普选中此策略。",
   low_vol_20: "按过去 20 日收益波动从低到高选股。",
@@ -47,7 +47,8 @@ async function poll() {
       $("start").max = $("end").max = state.data.last_date;
       $("source-summary").textContent = `${state.data.securities.toLocaleString()} 个代码 · ${state.data.days.toLocaleString()} 个日期 · ${state.data.first_date} — ${state.data.last_date}`;
       catalogLoaded = true;
-      await loadResult(state.current_id);
+      $("evolution-link").hidden = !state.evolution_url;
+      await loadResult(state.runs.some(run=>run.id===pendingRun) ? pendingRun : state.current_id);
     }
     const status = $("data-status");
     status.classList.toggle("ready", state.ready && !state.busy);
@@ -86,7 +87,7 @@ async function loadResult(runId) {
   strategyChanged();
   $("run-title").textContent = data.name;
   $("run-range").textContent = `${data.curve[0].date.slice(0, 10)} — ${data.curve.at(-1).date.slice(0, 10)}`;
-  $("run-mode").textContent = data.mode === "course" ? "课程规定口径" : data.mode === "frozen" ? "原始冻结实验" : "探索性运行";
+  $("run-mode").textContent = data.evolution_origin ? "Agent 候选复测" : data.mode === "course" ? "课程规定口径" : data.mode === "frozen" ? "原始冻结实验" : "探索性运行";
   $("run-mode").classList.toggle("exploration", data.mode !== "frozen");
   $("download-daily").href = `/api/export/${currentRun}/daily`;
   const m = data.metrics;

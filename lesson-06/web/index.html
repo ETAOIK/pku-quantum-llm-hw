@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Agent 演化 · QUANT LAB</title><link rel="stylesheet" href="/evolution-static/base.css"><link rel="stylesheet" href="/evolution-static/evolution.css"><script src="/evolution-static/app.js" defer></script></head>
+<body>
+<header><a class="brand" href="/">Q<span>QUANT LAB<small>因子、策略与反馈循环</small></span></a><nav><span id="status">连接本地系统…</span><a href="/">研究工作台</a><a id="backtest-nav" href="/">策略回测 ↗</a></nav></header>
+<div class="workspace">
+<aside><div class="eyebrow">AGENT HARNESS / 06</div><h1>让下一轮有依据</h1><p class="muted">提出因子，运行评价，读取反馈，再改进策略。</p>
+<form id="run-form"><label for="mode">运行方式</label><select id="mode"><option value="replay">重放本次三代提案</option><option value="auto" disabled>模型自主挖掘 · 尚未配置</option></select><p id="mode-note" class="small muted">重放用于复现18个候选，不会生成新的模型假设。</p><button id="start-run" class="primary" type="submit" disabled>新建演化重放</button><p id="run-feedback" class="small muted" role="status">可先查看已保存的结果。</p></form>
+<button id="resume" class="secondary" type="button" hidden>继续这次中断任务</button>
+<div class="aside-note"><b>固定研究边界</b><p>2025上下半年：两折开发与反馈。<br>2026一季度：冻结后的候选筛选。<br>2026二、三季度：后续检查。</p><p>每代6个候选，最多3代；因子可变，资金、费用和评价门槛由协议固定。</p><p>这些历史已在旧作业中查看，全部属于回顾性研究。</p></div>
+<div class="aside-note"><b>怎样看结果</b><p>点击候选查看公式、修改理由与父代；完成后可直接送入原策略回测，核对资金、成交、持仓，并继续调整参数。</p></div>
+</aside>
+<main><div id="error" role="alert" hidden></div><div class="page-title"><div><div class="eyebrow">FACTOR → FEEDBACK → STRATEGY</div><h2>Agent 因子与策略演化</h2><p class="muted">保留每一次尝试，让公式、持仓与模拟账本衔接。</p></div><select id="history" aria-label="切换演化运行"><option>暂无运行</option></select></div>
+<div id="provenance" class="notice">正在读取演化记录…</div><div id="metrics" class="metrics"></div>
+<section class="panel"><div class="panel-title"><h3>每代反馈与保留结果</h3><span id="phase">尚未开始</span></div><div id="rounds" class="rounds"></div><div id="objective-chart"></div><p class="small muted">目标分数综合两折净算术超额、回撤和公式复杂度；它不是收益率。后续表现不参与开发演化。</p></section>
+<section class="panel"><div class="panel-title"><h3>全部候选与父子谱系</h3><select id="generation" aria-label="按代数筛选"><option value="all">全部代数</option><option value="0">第1代 · 祖先</option><option value="1">第2代</option><option value="2">第3代</option></select></div><div class="scroll"><table id="candidates"></table></div></section>
+<section id="candidate-detail" class="panel" hidden><div class="panel-title"><div><div id="candidate-kicker" class="eyebrow"></div><h3 id="candidate-name"></h3></div><button id="bridge" class="secondary" type="button">在策略回测中复测 ↗</button></div><div class="candidate-code"><span>评分公式</span><code id="formula"></code><span>股票筛选条件</span><code id="condition"></code></div><div id="candidate-parameters" class="parameter-row"></div><div class="detail-grid"><div><h4>经济假设</h4><p id="hypothesis"></p></div><div><h4>根据反馈做了什么</h4><p id="change"></p></div></div><div id="parents" class="parents"></div><div class="scroll"><table id="folds"></table></div><p class="small muted">复测沿用这次候选的公式、条件、持仓数、调仓频率和后续日期；等权基准保持演化时的5日调仓。打开回测页后可以修改参数。</p></section>
+<section id="followup-panel" class="panel" hidden><div class="panel-title"><div><h3>冻结后的策略检查</h3><p id="selection-note" class="small muted"></p></div><select id="scenario" aria-label="成本与资金场景"><option value="base">十亿元 · 基准成本</option><option value="cost_stress">十亿元 · 佣金/滑点加倍</option><option value="small_cash">百万元 · 基准成本</option></select></div><div class="scroll"><table id="followup"></table></div><p class="small muted">各场景从新账户开始。期末残仓按标记价格估值，净收益不代表已全部变现；正IC也不等于扣费后正超额。</p></section>
+<details class="panel"><summary>运行日志与恢复状态</summary><pre id="log" aria-live="polite">暂无日志</pre></details>
+<footer>Agent提出假设；Harness约束预算、运行工具并保存反馈。完整分析报告单独存放于仓库报告目录；这里保留研究、演化和回测操作。</footer>
+</main></div></body></html>

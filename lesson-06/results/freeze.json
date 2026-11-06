@@ -1,0 +1,15 @@
+{
+  "frozen_at": "2026-10-30T21:36:20.494028+08:00",
+  "generation_champions": [
+    "g0_reversal5",
+    "g1_lowamt200",
+    "g2_intraday_amount"
+  ],
+  "history_sha256": "6d9dec283b5e5de6cff4d07aecf6f2e69061f8b779c310b906dbe594c0896836",
+  "mode": "retrospective; every historical interval was previously accessible/viewed; no independent holdout claim",
+  "shortlist": [
+    "g2_intraday_amount",
+    "g2_amount_floor",
+    "g2_amount_rev10"
+  ]
+}

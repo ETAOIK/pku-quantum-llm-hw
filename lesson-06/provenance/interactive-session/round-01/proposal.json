@@ -1,0 +1,86 @@
+{
+  "agent": "Codex current session; LLM decision after reading round-00 development feedback",
+  "candidates": [
+    {
+      "change": "父代两段IC为0.044/0.052，但净超额均负；只改50→200只，隔离组合宽度。",
+      "condition": "True",
+      "formula": "-returns(close, 5)",
+      "hypothesis": "分散到更多股票可能降低集中回撤，并减少每只目标规模。",
+      "id": "g1_rev200_5",
+      "name": "反转扩展到200只",
+      "parents": [
+        "g0_reversal5"
+      ],
+      "rebalance_every": 5,
+      "top_n": 200
+    },
+    {
+      "change": "父代年单边换手34/39倍；同时扩大100只、延长到10日，检验组合层修复。",
+      "condition": "True",
+      "formula": "-returns(close, 5)",
+      "hypothesis": "降低换手可能减少成本，但可能错过5日反转兑现。",
+      "id": "g1_rev100_10",
+      "name": "反转100只十日调仓",
+      "parents": [
+        "g0_reversal5"
+      ],
+      "rebalance_every": 10,
+      "top_n": 100
+    },
+    {
+      "change": "父代在两个半年的净超额均负；将因子5→10日并使用分散持仓，作为因子变异分支。",
+      "condition": "True",
+      "formula": "-returns(close, 10)",
+      "hypothesis": "较长反转窗口可能平滑极端短期噪声；方向保持反转。",
+      "id": "g1_rev10_200",
+      "name": "十日反转200只",
+      "parents": [
+        "g0_reversal5"
+      ],
+      "rebalance_every": 5,
+      "top_n": 200
+    },
+    {
+      "change": "低成交额父代成交比例仅21%/26%，反转父代亦受约束；显式提高流动性而不改成本。",
+      "condition": "ts_mean(amount, 20) > 100000000",
+      "formula": "-returns(close, 5)",
+      "hypothesis": "先限制成交额至少一亿元，测试可成交池能否保留反转信号。",
+      "id": "g1_liquid_rev",
+      "name": "液态池反转100只",
+      "parents": [
+        "g0_reversal5",
+        "g0_lowamount20"
+      ],
+      "rebalance_every": 5,
+      "top_n": 100
+    },
+    {
+      "change": "父代IC高但成交比例低、净超额负；改50→200只及5→10日，保留因子。",
+      "condition": "True",
+      "formula": "-ts_mean(amount, 20)",
+      "hypothesis": "把低成交额资金需求分散到更多股票，并降低调仓请求。",
+      "id": "g1_lowamt200",
+      "name": "低成交额200只十日调仓",
+      "parents": [
+        "g0_lowamount20"
+      ],
+      "rebalance_every": 10,
+      "top_n": 200
+    },
+    {
+      "change": "20日日内反转H1略正超额而H2为负；改20→5日，不根据后续数据翻转方向。",
+      "condition": "True",
+      "formula": "-ts_mean(close / open - 1, 5)",
+      "hypothesis": "缩短平滑窗口可能更贴近短期回补，200只分散个股尾部风险。",
+      "id": "g1_intraday5",
+      "name": "五日日内反转200只",
+      "parents": [
+        "g0_intraday20"
+      ],
+      "rebalance_every": 5,
+      "top_n": 200
+    }
+  ],
+  "context_sha256": "97bd93c512f3df85affd50bf6172cbab3eaa7f1d69946f5bb967834b8043fb9c",
+  "generation": 1
+}

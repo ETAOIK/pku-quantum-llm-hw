@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-30",
+  "checks": {
+    "web_replay_complete": true,
+    "web_replay_exact_history": true,
+    "candidate_parameters_preserved": true,
+    "strategy_daily_dates_match": true,
+    "benchmark_daily_dates_match": true,
+    "strategy_daily_equity_exact": true,
+    "benchmark_daily_equity_exact": true
+  },
+  "passed": true,
+  "automated_tests_passed": 93,
+  "browser_verified": [
+    "evolution navigation from existing app",
+    "generation filter: 6 third-generation candidates",
+    "candidate details and parent information",
+    "candidate backtest navigation to exact run",
+    "original backtest page displays formula, 200 stocks, 10-day interval, -3.81% return and -1.10 pp excess"
+  ],
+  "current_model_connection": "not configured; autonomous mode disabled; replay available",
+  "web_replay_run_id": "10bc73640e75",
+  "backtest_run_id": "135b14c0504d",
+  "max_strategy_equity_error_cny": 0.0,
+  "max_benchmark_equity_error_cny": 0.0,
+  "source_sha256": {
+    "lesson-06/evolution_web.py": "b4dac021015e013ab0877dc0747d31825b9fdf68075710ec74f4522a2b639f3d",
+    "lesson-06/web/index.html": "eea6bf3dbec666d52ea448872746aaa218cf20df5c10d92cee3a371667dd3d1f",
+    "lesson-06/web/app.js": "547d4ef3feecb02aeb54cea5cb2d0c9adf3c1335a39580199859d543450c85eb",
+    "lesson-06/web/evolution.css": "d51f7671e564c1de2081fa8b0e38f5d086d9a087a96a49fa22359bd5b796e4c2",
+    "lesson-04/server.py": "74e39a84f6767079abd5d6d700d87ace5da57aaa1895c71f022cef58809a9716",
+    "lesson-04/web/app.js": "c48bdda39a9a2ed7b9f7b82f0c05282013496bcec0ed08ab85c02b754ba1e6bd",
+    "lesson-05/app.py": "1e2a6c3b299bb580a39d8534fd5f06501efe02cae76bf1a505cb9e632a02b314"
+  },
+  "scope": "UI, controller and existing-engine consistency only; no new alpha or independent LLM experiment claim."
+}

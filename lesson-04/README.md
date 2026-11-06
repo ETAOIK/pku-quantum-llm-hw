@@ -22,6 +22,8 @@ python3 lesson-04/server.py --data lesson-04/data/feathers.zip --port 8767
 
 ## 打开可操作的回测网页
 
+2026-10-30：原回测页顶部已加入“Agent演化”，同一服务的 `/evolution` 提供[第六课Harness](../lesson-06/README.md)的候选、谱系、后台重放/已配置模型自主挖掘及一键复测。若需要同时使用因子评价，启动 `python3 lesson-05/app.py --port 8768`，在统一服务中切换三个模块。独立报告继续留在仓库报告目录。
+
 网页工作台支持选择已有策略、编写新的评分公式与持仓条件、调整日期/持仓数/调仓间隔/成本、实际运行回测，并查看净值、回撤、委托、持仓快照与每日账本。可搜索股票代码、切换本次服务中的运行记录、导出 CSV。前端页面连接 [server.py](server.py) 的本地回测接口，使用与研究报告相同的 [引擎](engine.py)。
 
 ![网页工作台实际截图](web/workbench.jpg)

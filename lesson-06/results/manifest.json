@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-10-30T21:35:13.145046+08:00",
+  "data_sha256": "5766950f2a105244867b842709cf4bad890e4e11df0eebeeaa4fec42dc05803d",
+  "protocol_sha256": "44d0a4279b3324049e8fdc543476bfdb7851943357c2db5b9965580beab81e25",
+  "source_sha256": {
+    "lesson-04/assignment/protocol.json": "7d12bd578204379228f45b3552ac820711220a66f77dde949526816d531b4212",
+    "lesson-04/course.py": "2dee0522182c5d083f7b1f637e03d7ae7deeccb25cf3a1293cd99c994032f93f",
+    "lesson-04/data.py": "5107e68daf4a22c56e5a319b6bf1e2593f50db1bc7011c1f8fcdc513fa83ef83",
+    "lesson-04/engine.py": "60aa3830da4730eda890bcffaeef5592bbe1e331102ea519fcdc821456b6ba6e",
+    "lesson-04/formula.py": "d5f2b62328c7211b3fe22f23c8f241d53ff2554fcc745b09d49844211613cb1e",
+    "lesson-04/results/data_audit.json": "03fb9f29d4dcd9b12406a299f1c8ce509e0e9236d82da287620dba46113b728d",
+    "lesson-05/factor.py": "025825a4f69c09fa9d063c2fe16cb1b8b8c4f4566a327ce8324a127f9a470005",
+    "lesson-05/mining.py": "59d165b012dfc1aa43f8517382a2b9caafa8844b76211f6eaf5136562df8b5b2",
+    "lesson-05/protocol.json": "2c916e00091a89741a446e5303b373415cb5afa5ab6e1b2c566119538f268a93",
+    "lesson-05/shared.py": "a21242fa0e7cc41be7cde75c537f3a597ecc6486b4ea404418020bd18bcfb9ea",
+    "lesson-06/harness.py": "b07e946f598df3c8b722b2c9aa65da22b072e585ae0d0c2b842581811fa2b50c"
+  },
+  "status_sha256": "a139741264dbca6d3ddbbae5343cb0bd9d6ac943ff5a71416e353a49735f151b"
+}

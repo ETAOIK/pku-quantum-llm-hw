@@ -1,0 +1,26 @@
+{
+  "annual_excess": 0.0,
+  "annual_net_return": -0.03709006409179956,
+  "annual_one_way_turnover": 4.200918391740433,
+  "annual_vol": 0.21606887299420216,
+  "cagr": -0.05860483761970936,
+  "checks": {
+    "cash_plus_holdings": true,
+    "no_st_buys": true,
+    "nonnegative_cash": true,
+    "signal_precedes_order": true
+  },
+  "days": 125,
+  "fees": 1839005.4847854238,
+  "fill_fraction": 0.8362759853891515,
+  "max_drawdown": -0.20823687413521363,
+  "max_stale_value_fraction": 0.006434614537555518,
+  "mean_exposure": 0.8751783328247625,
+  "min_cash": 34515847.412591495,
+  "sharpe": -0.17165852525548558,
+  "slippage_cost": 4103842.0088651003,
+  "terminal_cash": 967219009.041493,
+  "terminal_positions": 37,
+  "total_excess_pp": 0.0,
+  "total_return": -0.02951224382522477
+}

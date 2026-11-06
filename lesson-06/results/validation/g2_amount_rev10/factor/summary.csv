@@ -1,0 +1,2 @@
+horizon,signal_days,mature_days,ic_days,pearson_ic_mean,rank_ic_mean,rank_ic_std,rank_icir,rank_ic_positive_fraction,rank_ic_ci_low,rank_ic_ci_high,factor_coverage,label_coverage,paired_samples,missing_labels,group_valid_days,spread_mean,quantile_monotonicity,top_turnover,bottom_turnover,rank_autocorrelation,diagnosis
+5,56,50,50,0.0316378068,0.1002008547,0.140450212,0.7134261548,0.78,0.0423494294,0.1580522799,1,0.9988860826,244808,273,50,0.004718935448,0.9,0.1174716827,0.1349644319,0.9724564622,证据不足：有效日期太少

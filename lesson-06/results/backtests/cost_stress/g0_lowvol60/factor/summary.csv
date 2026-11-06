@@ -1,0 +1,2 @@
+horizon,signal_days,mature_days,ic_days,pearson_ic_mean,rank_ic_mean,rank_ic_std,rank_icir,rank_ic_positive_fraction,rank_ic_ci_low,rank_ic_ci_high,factor_coverage,label_coverage,paired_samples,missing_labels,group_valid_days,spread_mean,quantile_monotonicity,top_turnover,bottom_turnover,rank_autocorrelation,diagnosis
+5,125,119,119,-0.01164705721,0.02956518224,0.3220126454,0.0918137305,0.512605042,-0.08581584663,0.1449462111,0.9889173327,0.9988247351,571114,672,119,-0.002340940408,-0.7,0.02525765169,0.02272285691,0.9974593339,证据不足：Rank IC 区间含零

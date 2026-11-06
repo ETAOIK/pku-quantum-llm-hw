@@ -1,0 +1,64 @@
+{
+  "account": {
+    "commission_bps": 1,
+    "initial_cash": 1000000000,
+    "invested_fraction": 0.95,
+    "liquidation_days": 20,
+    "participation": 0.1,
+    "slippage_bps": 5
+  },
+  "batch_size": 6,
+  "bootstrap": {
+    "block_days": 20,
+    "repetitions": 1000,
+    "seed": 20261030
+  },
+  "cost_note": "course assumptions: sell tax 5 bps in reused course simulator; not a claim about complete current statutory costs",
+  "development": {
+    "2025_h1": [
+      "2025-01-02",
+      "2025-06-30"
+    ],
+    "2025_h2": [
+      "2025-07-01",
+      "2025-12-31"
+    ]
+  },
+  "development_objective": "min(fold annual arithmetic net excess vs matched dynamic equal weight) - 0.25 * max(fold absolute maximum drawdown) - 0.0001 * AST nodes in formula and condition",
+  "fallback": "select no qualified candidate; evaluate a labeled diagnostic leader, not a deployment candidate",
+  "followup": [
+    "2026-04-01",
+    "2026-09-30"
+  ],
+  "gate": {
+    "min_excess": 0,
+    "min_factor_coverage": 0.8,
+    "min_label_coverage": 0.95,
+    "min_pool_coverage": 0.2,
+    "min_rank_ic": 0,
+    "min_spread": 0
+  },
+  "generations": 3,
+  "horizon": 5,
+  "mode": "retrospective; every historical interval was previously accessible/viewed; no independent holdout claim",
+  "shortlist_size": 3,
+  "stop": "three generations only; freeze before validation; select before followup; no post-followup mutation",
+  "strategy_space": {
+    "rebalance_every": [
+      5,
+      10,
+      20
+    ],
+    "top_n": [
+      50,
+      100,
+      200
+    ]
+  },
+  "validation": [
+    "2026-01-01",
+    "2026-03-31"
+  ],
+  "validation_selection": "development gate and validation gate; then descending validation annual arithmetic excess minus 0.25*absolute maximum drawdown minus complexity penalty; id breaks ties",
+  "version": "lesson-06-v1-20261030"
+}
